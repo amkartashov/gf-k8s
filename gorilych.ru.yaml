@@ -1,0 +1,77 @@
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: gorilychru
+  labels:
+    app: gorilychru
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gorilychru
+  template:
+    metadata:
+      labels:
+        app: gorilychru
+    spec:
+      volumes:
+      - name: gorilychrume
+        hostPath:
+          path: /data/gorilych.ru/me
+          type: 
+      - name: nginxdefaultconf
+        hostPath:
+          path: /data/gorilych.ru/nginx.vh.default.conf
+          type:
+      containers:
+      - name: gorilychrume 
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+          name: gorilychrume
+        volumeMounts:
+          - mountPath: /usr/share/nginx/html/me
+            name: gorilychrume 
+          - mountPath: /etc/nginx/conf.d/default.conf
+            name: nginxdefaultconf
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: gorilychru
+spec:
+  selector:
+    app: gorilychru
+  ports:
+  - name: gorilychrume
+    protocol: TCP
+    port: 81
+    targetPort: gorilychrume
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gorilychru
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  tls:
+  - secretName: gorilych-ru-tls
+    hosts:
+    - gorilych.ru
+    - router.gorilych.ru
+    - confluence.gorilych.ru
+    - jira.gorilych.ru
+    - git.gorilych.ru
+    - seafile.gorilych.ru
+  rules:
+    - host: gorilych.ru
+      http:
+        paths:
+        - path: /me
+          backend:
+            serviceName: gorilychru
+            servicePort: 81
+
