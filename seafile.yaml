@@ -1,0 +1,179 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: seafile
+  labels:
+    type: local
+    name: seafile
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 200Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: /data/seafile
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: seafile
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 200Gi
+  selector:
+    matchLabels:
+      name: seafile
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: seafile
+  labels:
+    app: seafile
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: seafile
+  template:
+    metadata:
+      labels:
+        app: seafile
+    spec:
+      volumes:
+      - name: seafile
+        persistentVolumeClaim:
+          claimName: seafile
+      - name: seahubstatic
+        hostPath:
+          path: /data/seafile/seafile-server-latest/seahub/media
+          type: 
+      - name: seahubavatars
+        hostPath:
+          path: /data/seafile/seahub-data/avatars
+          type: 
+      containers:
+      - name: ccnet
+        image: seafile
+        imagePullPolicy: IfNotPresent
+        command: [ "/bin/entrypoint", "ccnet"]
+        volumeMounts:
+          - mountPath: /seafile
+            name: seafile
+      - name: seaf
+        image: seafile
+        imagePullPolicy: IfNotPresent
+        command: [ "/bin/entrypoint", "seaf"]
+        ports:
+        - containerPort: 8082
+          name: filesever
+        volumeMounts:
+          - mountPath: /seafile
+            name: seafile
+      - name: seahub
+        image: seafile
+        imagePullPolicy: IfNotPresent
+        command: [ "/bin/entrypoint", "seahub"]
+        ports:
+        - containerPort: 8000
+          name: seahub
+        volumeMounts:
+          - mountPath: /seafile
+            name: seafile
+      - name: seahubstatic
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+          name: seahubstatic
+        volumeMounts:
+          - mountPath: /usr/share/nginx/html
+            name: seahubstatic
+          - mountPath: /usr/share/nginx/html/avatars
+            name: seahubavatars
+      initContainers:
+      - name: init
+        image: seafile
+        imagePullPolicy: IfNotPresent
+        command: [ "/bin/entrypoint", "init"]
+        volumeMounts:
+          - mountPath: /seafile
+            name: seafile
+        env:
+          - name: SEAFILE_VERSION
+            value: "6.2.3"
+          - name: SERVER_NAME
+            value: gullfaxi
+          - name: SERVER_HOSTNAME
+            value: seafile.gorilych.ru
+          - name: MYSQL_HOST
+            value: mysql.default.svc.cluster.local
+          - name: MYSQL_USER
+            value: seafile
+          - name: MYSQL_PASSWORD
+            value: in9ceeC6ohs3
+          - name: ADMINEMAIL
+            value: gorilych@gmail.com
+          - name: ADMINASSWORD
+            value: in9ceeC6ohs3
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: seafile
+spec:
+  selector:
+    app: seafile
+  ports:
+  - name: seahub
+    protocol: TCP
+    port: 80
+    targetPort: seahub
+  - name: seahubstatic
+    protocol: TCP
+    port: 81
+    targetPort: seahubstatic
+  - name: fileserver
+    protocol: TCP
+    port: 82
+    targetPort: filesever
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: seafile
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+spec:
+  tls:
+  - secretName: gorilych-ru-tls
+    hosts:
+    - gorilych.ru
+    - router.gorilych.ru
+    - confluence.gorilych.ru
+    - jira.gorilych.ru
+    - git.gorilych.ru
+    - seafile.gorilych.ru
+  rules:
+    - host: seafile.gorilych.ru
+      http:
+        paths:
+        - backend:
+            serviceName: seafile
+            servicePort: 80
+        - path: /media
+          backend:
+            serviceName: seafile
+            servicePort: 81
+        - path: /seafhttp
+          backend:
+            serviceName: seafile
+            servicePort: 82
+

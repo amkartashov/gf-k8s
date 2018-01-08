@@ -1,0 +1,76 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: postgres
+  labels:
+    type: local
+    name: postgres
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/postgres
+    # mkdir -p /data/postgres
+    # chown 999.999 /data/postgres
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgres
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  selector:
+    matchLabels:
+      name: postgres
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      volumes:
+      - name: postgres
+        persistentVolumeClaim:
+          claimName: postgres
+      containers:
+      - name: postgres
+        image: postgres
+        ports:
+        - containerPort: 5432
+          name: pgsql
+        volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: postgres
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: pgsql
+spec:
+  selector:
+    app: postgres
+  ports:
+  - name: pgsql
+    protocol: TCP
+    port: 5432
+    targetPort: pgsql

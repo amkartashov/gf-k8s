@@ -1,0 +1,129 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: confluence
+  labels:
+    type: local
+    name: confluence
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/confluence
+    # mkdir -p /data/confluence
+    # chown 2.2 /data/confluence
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: confluence
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  selector:
+    matchLabels:
+      name: confluence
+---
+# TODO 1
+# Add readiness probe
+# https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+# https://confluence.atlassian.com/enterprise/jira-data-center-load-balancer-examples-781200827.html
+# see Load Balancing Health Check URL
+# TODO 2
+# Add non-persistent volume for logs ?
+# TODO 3
+# increase nginx timeout
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: confluence
+  labels:
+    app: confluence
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: confluence
+  template:
+    metadata:
+      labels:
+        app: confluence
+    spec:
+      volumes:
+      - name: confluence
+        persistentVolumeClaim:
+          claimName: confluence
+      containers:
+      - name: confluence
+        image: atlassian/confluence-server:latest
+        ports:
+        - containerPort: 8090
+          name: http
+        - containerPort: 8091
+          name: synchrony
+        volumeMounts:
+          - mountPath: /var/atlassian/application-data/confluence
+            name: confluence
+        env:
+          - name: CATALINA_CONNECTOR_PROXYNAME
+            value: confluence.gorilych.ru
+          - name: CATALINA_CONNECTOR_PROXYPORT
+            value: "443"
+          - name: CATALINA_CONNECTOR_SCHEME
+            value: https
+          - name: CATALINA_CONNECTOR_SECURE
+            value: "true"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: confluence
+spec:
+  selector:
+    app: confluence
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: http
+  - name: synchrony
+    protocol: TCP
+    port: 81
+    targetPort: synchrony
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: confluence
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 32m
+spec:
+  tls:
+  - secretName: gorilych-ru-tls
+    hosts:
+    - gorilych.ru
+    - router.gorilych.ru
+    - confluence.gorilych.ru
+    - jira.gorilych.ru
+    - git.gorilych.ru
+    - seafile.gorilych.ru
+  rules:
+    - host: confluence.gorilych.ru
+      http:
+        paths:
+        - backend:
+            serviceName: confluence
+            servicePort: 80
+        - path: /synchrony
+          backend:
+            serviceName: confluence
+            servicePort: 81

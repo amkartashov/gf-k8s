@@ -1,0 +1,122 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: gitea
+  labels:
+    type: local
+    name: gitea
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/gitea
+    # chown 200.200 /data/gitea
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: gitea
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  selector:
+    matchLabels:
+      name: gitea
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: gitea
+  labels:
+    app: gitea
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitea
+  template:
+    metadata:
+      labels:
+        app: gitea
+    spec:
+      volumes:
+      - name: gitea
+        persistentVolumeClaim:
+          claimName: gitea
+      containers:
+      - name: gitea
+        image: gitea/gitea
+        ports:
+        - containerPort: 3000
+          name: http
+        - containerPort: 22
+          name: ssh
+        volumeMounts:
+          - mountPath: /data
+            name: gitea
+        env:
+          - name: USER_UID
+            value: "200"
+          - name: USER_GID
+            value: "200"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: gitea
+spec:
+  selector:
+    app: gitea
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: http
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gitea
+  annotations:
+    kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+  - secretName: gorilych-ru-tls
+    hosts:
+    - gorilych.ru
+    - router.gorilych.ru
+    - confluence.gorilych.ru
+    - jira.gorilych.ru
+    - git.gorilych.ru
+    - seafile.gorilych.ru
+  rules:
+    - host: git.gorilych.ru
+      http:
+        paths:
+        - backend:
+            serviceName: gitea
+            servicePort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: sshgitea
+spec:
+  selector:
+    app: gitea
+  ports:
+  - name: ssh
+    protocol: TCP
+    port: 22
+    targetPort: ssh
+    nodePort: 31022
+  type: NodePort
+

@@ -1,0 +1,116 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: jira
+  labels:
+    type: local
+    name: jira
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/jira
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: jira
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  selector:
+    matchLabels:
+      name: jira
+---
+# TODO 1
+# Add readiness probe
+# https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+# https://jira.atlassian.com/enterprise/jira-data-center-load-balancer-examples-781200827.html
+# see Load Balancing Health Check URL
+# TODO 2
+# Add non-persistent volume for logs ?
+# TODO 3
+# increase nginx timeout
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: jira
+  labels:
+    app: jira
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jira
+  template:
+    metadata:
+      labels:
+        app: jira
+    spec:
+      volumes:
+      - name: jira
+        persistentVolumeClaim:
+          claimName: jira
+      containers:
+      - name: jira
+        image: cptactionhank/atlassian-jira:latest
+        ports:
+        - containerPort: 8080
+          name: http
+        volumeMounts:
+          - mountPath: /var/atlassian/jira
+            name: jira
+        env:
+          - name: X_PROXY_NAME
+            value: jira.gorilych.ru
+          - name: X_PROXY_PORT
+            value: "443"
+          - name: X_PROXY_SCHEME
+            value: https
+          - name: X_PROXY_SECURE
+            value: "true"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: jira
+spec:
+  selector:
+    app: jira
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: http
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jira
+  annotations:
+    kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+  - secretName: gorilych-ru-tls
+    hosts:
+    - gorilych.ru
+    - router.gorilych.ru
+    - confluence.gorilych.ru
+    - jira.gorilych.ru
+    - git.gorilych.ru
+    - seafile.gorilych.ru
+  rules:
+    - host: jira.gorilych.ru
+      http:
+        paths:
+        - backend:
+            serviceName: jira
+            servicePort: 80

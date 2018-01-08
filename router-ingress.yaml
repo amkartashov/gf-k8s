@@ -1,0 +1,44 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: router-svc
+spec:
+  ports:
+  - protocol: TCP
+    port: 443
+    targetPort: 443
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: router-svc
+subsets:
+  - addresses:
+      - ip: 192.168.1.1
+    ports:
+      - port: 44443
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-rules
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/secure-backends: "true"
+spec:
+  tls:
+  - secretName: gorilych-ru-tls
+    hosts:
+    - gorilych.ru
+    - router.gorilych.ru
+    - confluence.gorilych.ru
+    - jira.gorilych.ru
+    - git.gorilych.ru
+    - seafile.gorilych.ru
+  rules:
+    - host: router.gorilych.ru
+      http:
+        paths:
+        - backend:
+            serviceName: router-svc
+            servicePort: 443

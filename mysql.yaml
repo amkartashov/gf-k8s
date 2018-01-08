@@ -1,0 +1,76 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mariadb
+  labels:
+    type: local
+    name: mariadb
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/mariadb
+    # mkdir -p /data/mariadb
+    # chown 999.999 /data/mariadb
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mariadb
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  selector:
+    matchLabels:
+      name: mariadb
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: mariadb
+  labels:
+    app: mariadb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      volumes:
+      - name: mariadb
+        persistentVolumeClaim:
+          claimName: mariadb
+      containers:
+      - name: mariadb
+        image: mariadb
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: mariadb
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mysql
+spec:
+  selector:
+    app: mariadb
+  ports:
+  - name: mysql
+    protocol: TCP
+    port: 3306
+    targetPort: mysql
