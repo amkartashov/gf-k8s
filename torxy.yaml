@@ -1,0 +1,38 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: torxy
+  labels:
+    app: torxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: torxy
+  template:
+    metadata:
+      labels:
+        app: torxy
+    spec:
+      containers:
+      - name: torxy
+        image: rdsubhas/tor-privoxy-alpine
+        ports:
+        - containerPort: 8118
+          name: privoxy
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: torxy
+spec:
+  selector:
+    app: torxy
+  ports:
+  - name: privoxy
+    protocol: TCP
+    port: 8118
+    targetPort: privoxy
+    nodePort: 31881
+  type: NodePort
+

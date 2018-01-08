@@ -34,3 +34,6 @@ Note: passwords in these files are used only at deployment stage and changed man
 
   sshct.yaml - set of k8s resources for SSH service.
 
+* torxy.yaml
+
+  Tor/Privoxy service based on https://github.com/rdsubhas/docker-tor-privoxy-alpine
