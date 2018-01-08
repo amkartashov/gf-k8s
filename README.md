@@ -3,6 +3,8 @@ Kubernetes deployments and related
 
 Collection of k8s resources for deployment of different applications on self-hosted k8s cluster.
 
+Note: passwords in these files are used only at deployment stage and changed manually afterwards.
+
 * router-ingress.yaml
   Proxy for router web ui
 * mysql.yaml and postgres.yaml
