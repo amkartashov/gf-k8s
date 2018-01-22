@@ -60,9 +60,13 @@ spec:
       - name: sshcthome
         persistentVolumeClaim:
           claimName: sshcthome
+      - name: gorilychrume
+        hostPath:
+          path: /data/gorilych.ru/me
+          type:
       containers:
       - name: sshct
-        image: sshct
+        image: gorilych/sshct
         imagePullPolicy: IfNotPresent
         env:
         - name: CTUSERPWD
@@ -76,6 +80,8 @@ spec:
         volumeMounts:
           - mountPath: /home
             name: sshcthome
+          - mountPath: /home/www/me
+            name: gorilychrume
 ---
 kind: Service
 apiVersion: v1
