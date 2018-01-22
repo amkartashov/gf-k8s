@@ -11,7 +11,12 @@ update-locale LANG=$CTLOCALE
 
 echo "AllowUsers $CTUSER" >> /etc/ssh/sshd_config
 useradd --uid $CTUSERID --user-group --shell /bin/bash $CTUSER
-echo $CTUSER:"$CTUSERPWD" | chpasswd
+if [ -f /home/.$CTUSER.shadow -a \
+     "$(stat --dereference --printf='%u %g %a' /home/.$CTUSER.shadow)" == "0 0 640" ]; then
+  echo $CTUSER:"$(cat /home/.$CTUSER.shadow)" | chpasswd -e
+else
+  echo $CTUSER:"$CTUSERPWD" | chpasswd
+fi
 passwd -u $CTUSER
 usermod -a -G sudo $CTUSER
 
