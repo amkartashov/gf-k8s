@@ -1,0 +1,21 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kubernetes-dashboard
+  namespace: kube-system
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/secure-backends: "true"
+spec:
+  tls:
+  - secretName: k8s-gorilych-ru-tls
+    hosts:
+    - k8s.gorilych.ru
+  rules:
+    - host: k8s.gorilych.ru
+      http:
+        paths:
+        - backend:
+            serviceName: kubernetes-dashboard
+            servicePort: 8443
