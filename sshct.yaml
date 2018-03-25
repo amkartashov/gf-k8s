@@ -15,6 +15,7 @@ spec:
       labels:
         app: sshct
     spec:
+      hostname: sshct
       volumes:
       - name: home
         hostPath:
