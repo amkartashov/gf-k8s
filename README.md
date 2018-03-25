@@ -9,6 +9,10 @@ Note: passwords in these files are used only at deployment stage and changed man
 
   Proxy for router web ui
 
+* k8s-dashboard-ingress.yaml
+
+  Ingress rule for Kubernetes dashboard
+
 * mysql.yaml and postgres.yaml
 
   Database resources
@@ -33,6 +37,14 @@ Note: passwords in these files are used only at deployment stage and changed man
   SSHct/ - docker image (from debian 9) for container with SSH service, which starts tmux
 
   sshct.yaml - set of k8s resources for SSH service.
+
+* SSH service with openvpn client
+
+  Similar to SSH service, but not exposed and accessible only within cluster.
+
+  Has 2 containers, the first one is for SSH (from SSHct docker image), another one is for OpenVPN (from dperson/openvpn-client cloned image)
+
+  vpnct.yaml describes the deployment and service.
 
 * torxy.yaml
 
