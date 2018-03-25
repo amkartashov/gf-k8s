@@ -1,37 +1,4 @@
 ---
-kind: PersistentVolume
-apiVersion: v1
-metadata:
-  name: sshcthome
-  labels:
-    type: local
-    name: sshcthome
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 100Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /data/home
-    # mkdir -p /data/home/me
-    # chown 1000.1000 /data/home/me
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: sshcthome
-spec:
-  storageClassName: manual
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 100Gi
-  selector:
-    matchLabels:
-      name: sshcthome
----
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
@@ -49,9 +16,10 @@ spec:
         app: sshct
     spec:
       volumes:
-      - name: sshcthome
-        persistentVolumeClaim:
-          claimName: sshcthome
+      - name: home
+        hostPath:
+          path: /data/home
+          type:
       - name: gorilychrume
         hostPath:
           path: /data/gorilych.ru/me
@@ -71,7 +39,7 @@ spec:
           name: ssh
         volumeMounts:
           - mountPath: /home
-            name: sshcthome
+            name: home
           - mountPath: /home/www/me
             name: gorilychrume
 ---
