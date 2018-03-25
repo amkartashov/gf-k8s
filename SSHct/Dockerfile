@@ -15,7 +15,7 @@ RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
     openssh-server bash tmux curl sudo less vim \
     dialog locales man bash-completion wget apt-file telnet \
-    dnsutils git pwgen python bc golang
+    dnsutils git pwgen python bc unzip graphviz whois mysql-client golang-1.8
 
 ADD sshd_config /etc/ssh/sshd_config
 ADD entrypoint.sh /bin/entrypoint
