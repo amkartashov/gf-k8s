@@ -1,12 +1,4 @@
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  name: sshct
-type: Opaque
-data:
-  password: OGJKYWtURER3amQ3SG4=
----
 kind: PersistentVolume
 apiVersion: v1
 metadata:
