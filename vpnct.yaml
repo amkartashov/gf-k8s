@@ -1,0 +1,72 @@
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: vpnct
+  labels:
+    app: vpnct
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vpnct
+  template:
+    metadata:
+      labels:
+        app: vpnct
+    spec:
+      hostname: vpnct
+      volumes:
+      - name: home
+        hostPath:
+          path: /data/home
+          type:
+      - name: gorilychrume
+        hostPath:
+          path: /data/gorilych.ru/me
+          type:
+      - name: vpn
+        hostPath:
+          path: /data/home/me/vpn
+          type:
+      containers:
+      - name: vpnct
+        image: gorilych/sshct
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: CTUSERPWD
+          valueFrom:
+            secretKeyRef:
+              name: sshct
+              key: password
+        ports:
+        - containerPort: 22
+          name: ssh
+        volumeMounts:
+          - mountPath: /home
+            name: home
+          - mountPath: /home/www/me
+            name: gorilychrume
+      - name: openvpn-client
+        image: gorilych/openvpn-client
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+        args: ["-d"]
+        volumeMounts:
+          - mountPath: /vpn
+            name: vpn
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: vpnct
+spec:
+  selector:
+    app: vpnct
+  ports:
+  - name: ssh
+    protocol: TCP
+    port: 22
