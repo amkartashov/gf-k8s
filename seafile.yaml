@@ -153,13 +153,8 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
 spec:
   tls:
-  - secretName: gorilych-ru-tls
+  - secretName: seafile-gorilych-ru-tls
     hosts:
-    - gorilych.ru
-    - router.gorilych.ru
-    - confluence.gorilych.ru
-    - jira.gorilych.ru
-    - git.gorilych.ru
     - seafile.gorilych.ru
   rules:
     - host: seafile.gorilych.ru

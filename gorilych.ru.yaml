@@ -61,11 +61,6 @@ spec:
   - secretName: gorilych-ru-tls
     hosts:
     - gorilych.ru
-    - router.gorilych.ru
-    - confluence.gorilych.ru
-    - jira.gorilych.ru
-    - git.gorilych.ru
-    - seafile.gorilych.ru
   rules:
     - host: gorilych.ru
       http:

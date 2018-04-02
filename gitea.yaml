@@ -89,14 +89,9 @@ metadata:
     kubernetes.io/tls-acme: "true"
 spec:
   tls:
-  - secretName: gorilych-ru-tls
+  - secretName: git-gorilych-ru-tls
     hosts:
-    - gorilych.ru
-    - router.gorilych.ru
-    - confluence.gorilych.ru
-    - jira.gorilych.ru
     - git.gorilych.ru
-    - seafile.gorilych.ru
   rules:
     - host: git.gorilych.ru
       http:
