@@ -1,0 +1,62 @@
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: minecraft
+  labels:
+    app: minecraft
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minecraft
+  template:
+    metadata:
+      labels:
+        app: minecraft
+    spec:
+      hostname: minecraft
+      volumes:
+      - name: minecraft
+        hostPath:
+          path: /data/minecraft
+          type:
+      containers:
+      - name: minecraft
+        image: ashdev/docker-spigot
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: EULA
+          value: "TRUE"
+        - name: MODE
+          value: creative
+        - name: ONLINE
+          value: "false"
+        ports:
+        - containerPort: 25565
+          name: minecraft
+        - containerPort: 4711
+          name: minecraftapi
+        volumeMounts:
+          - mountPath: /minecraft
+            name: minecraft
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: minecraft
+spec:
+  selector:
+    app: minecraft
+  ports:
+  - name: minecraft
+    protocol: TCP
+    port: 25565
+    targetPort: minecraft
+    nodePort: 30565
+  - name: minecraftapi
+    protocol: TCP
+    port: 4711
+    targetPort: minecraftapi
+    nodePort: 30566
+  type: NodePort
