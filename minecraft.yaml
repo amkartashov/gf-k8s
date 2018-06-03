@@ -19,7 +19,7 @@ spec:
       volumes:
       - name: minecraft
         hostPath:
-          path: /data/minecraft
+          path: /data/home/minecraft
           type:
       containers:
       - name: minecraft
@@ -32,6 +32,8 @@ spec:
           value: creative
         - name: ONLINE
           value: "false"
+        - name: JVM_OPTS
+          value: "-Xmx1024M -Xms1024M -Dfile.encoding=UTF-8"
         ports:
         - containerPort: 25565
           name: minecraft
