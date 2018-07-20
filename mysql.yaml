@@ -74,3 +74,20 @@ spec:
     protocol: TCP
     port: 3306
     targetPort: mysql
+---
+# external service
+kind: Service
+apiVersion: v1
+metadata:
+  name: mysql-external
+spec:
+  selector:
+    app: mariadb
+  ports:
+  - name: mysql
+    protocol: TCP
+    port: 3306
+    targetPort: mysql
+    nodePort: 30306
+  type: NodePort
+
