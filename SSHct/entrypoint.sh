@@ -26,10 +26,8 @@ if [ "$PUBKEY" != "none" ]; then
   chmod 600 /home/$CTUSER/.ssh/authorized_keys
 fi
 
-# Install additional packages in background 
-if [ -f /home/.packages ]; then
-  tmux new-session -d -s aptget 'cat /home/.packages | xargs --max-args=1 apt-get install -y'
-fi
+# Run init script in background 
+tmux new-session -d -s init '/bin/init.sh'
 
 # start ssh daemon
 exec /usr/sbin/sshd -Def /etc/ssh/sshd_config
