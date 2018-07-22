@@ -20,11 +20,7 @@ Note: passwords in these files are used only at deployment stage and changed man
 * confluence.yaml
 * jira.yaml
 * gitea.yaml
-* Seafile
-
-  SeafileCT/ - common docker image ccnet, seafile and seahub
-
-  seafile.yaml - set of resources for seafile.
+* seafile.yaml - set of resources for seafile.
 
   Pod consists of 4 containers: ccnet, seaf, seahub and seahubstatic (on nginx image).
 

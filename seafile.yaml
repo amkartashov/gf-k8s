@@ -60,14 +60,14 @@ spec:
           type: 
       containers:
       - name: ccnet
-        image: seafile
+        image: gorilych/seafile:6.3.2
         imagePullPolicy: IfNotPresent
         command: [ "/bin/entrypoint", "ccnet"]
         volumeMounts:
           - mountPath: /seafile
             name: seafile
       - name: seaf
-        image: seafile
+        image: gorilych/seafile:6.3.2
         imagePullPolicy: IfNotPresent
         command: [ "/bin/entrypoint", "seaf"]
         ports:
@@ -77,7 +77,7 @@ spec:
           - mountPath: /seafile
             name: seafile
       - name: seahub
-        image: seafile
+        image: gorilych/seafile:6.3.2
         imagePullPolicy: IfNotPresent
         command: [ "/bin/entrypoint", "seahub"]
         ports:
@@ -98,21 +98,22 @@ spec:
             name: seahubavatars
       initContainers:
       - name: init
-        image: seafile
+        image: gorilych/seafile:6.3.2
         imagePullPolicy: IfNotPresent
         command: [ "/bin/entrypoint", "init"]
         volumeMounts:
           - mountPath: /seafile
             name: seafile
         env:
-          - name: SEAFILE_VERSION
-            value: "6.2.3"
+          # commented to use default value from image
+          #- name: SEAFILE_VERSION
+          #  value: "6.2.3"
           - name: SERVER_NAME
             value: gullfaxi
           - name: SERVER_HOSTNAME
             value: seafile.gorilych.ru
           - name: MYSQL_HOST
-            value: mysql.default.svc.cluster.local
+            value: mysql
           - name: MYSQL_USER
             value: seafile
           - name: MYSQL_PASSWORD
