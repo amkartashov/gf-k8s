@@ -15,7 +15,6 @@ spec:
   - git.gorilych.ru
   - jira.gorilych.ru
   - jupyter.gorilych.ru
-  - k8s.gorilych.ru
   - router.gorilych.ru
   - seafile.gorilych.ru
   # w/a for rewrite-target from https://github.com/jetstack/cert-manager/issues/286#issuecomment-361033891
@@ -28,7 +27,6 @@ spec:
       - git.gorilych.ru
       - jira.gorilych.ru
       - jupyter.gorilych.ru
-      - k8s.gorilych.ru
       - router.gorilych.ru
       - seafile.gorilych.ru
 

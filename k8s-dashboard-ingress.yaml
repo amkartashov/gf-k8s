@@ -1,11 +1,28 @@
 ---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: k8s-gorilych-ru-certificate
+  namespace: kube-system
+spec:
+  secretName: k8s-gorilych-ru-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  commonName: k8s.gorilych.ru
+  # w/a for rewrite-target from https://github.com/jetstack/cert-manager/issues/286#issuecomment-361033891
+  acme:
+    config:
+    - http01: { ingressClass: nginx }
+      domains:
+      - k8s.gorilych.ru
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: kubernetes-dashboard
   namespace: kube-system
   annotations:
-    kubernetes.io/tls-acme: "true"
     nginx.ingress.kubernetes.io/secure-backends: "true"
 spec:
   tls:
