@@ -20,12 +20,6 @@ Note: passwords in these files are used only at deployment stage and changed man
 * confluence.yaml
 * jira.yaml
 * gitea.yaml
-* seafile.yaml - set of resources for seafile.
-
-  Pod consists of 4 containers: ccnet, seaf, seahub and seahubstatic (on nginx image).
-
-  One init container is used to install/upgrade.
-
 * SSH service
 
   Used as jump server, as development box (has golang an python, git), as management server for docker and k8s, etc
