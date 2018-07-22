@@ -59,11 +59,10 @@ kind: Ingress
 metadata:
   name: jupyter
   annotations:
-    kubernetes.io/tls-acme: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 32m
 spec:
   tls:
-  - secretName: jupyter-gorilych-ru-tls
+  - secretName: san-gorilych-ru-tls
     hosts:
     - jupyter.gorilych.ru
   rules:

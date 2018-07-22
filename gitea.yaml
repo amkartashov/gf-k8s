@@ -85,11 +85,9 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: gitea
-  annotations:
-    kubernetes.io/tls-acme: "true"
 spec:
   tls:
-  - secretName: git-gorilych-ru-tls
+  - secretName: san-gorilych-ru-tls
     hosts:
     - git.gorilych.ru
   rules:

@@ -104,11 +104,10 @@ kind: Ingress
 metadata:
   name: confluence
   annotations:
-    kubernetes.io/tls-acme: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 32m
 spec:
   tls:
-  - secretName: confluence-gorilych-ru-tls
+  - secretName: san-gorilych-ru-tls
     hosts:
     - confluence.gorilych.ru
   rules:

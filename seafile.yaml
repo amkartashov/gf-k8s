@@ -148,12 +148,11 @@ kind: Ingress
 metadata:
   name: seafile
   annotations:
-    kubernetes.io/tls-acme: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
 spec:
   tls:
-  - secretName: seafile-gorilych-ru-tls
+  - secretName: san-gorilych-ru-tls
     hosts:
     - seafile.gorilych.ru
   rules:

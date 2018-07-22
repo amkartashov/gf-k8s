@@ -54,11 +54,10 @@ kind: Ingress
 metadata:
   name: gorilychru
   annotations:
-    kubernetes.io/tls-acme: "true"
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   tls:
-  - secretName: gorilych-ru-tls
+  - secretName: san-gorilych-ru-tls
     hosts:
     - gorilych.ru
   rules:

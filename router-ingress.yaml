@@ -23,11 +23,10 @@ kind: Ingress
 metadata:
   name: ingress-rules
   annotations:
-    kubernetes.io/tls-acme: "true"
     nginx.ingress.kubernetes.io/secure-backends: "true"
 spec:
   tls:
-  - secretName: router-gorilych-ru-tls
+  - secretName: san-gorilych-ru-tls
     hosts:
     - router.gorilych.ru
   rules:

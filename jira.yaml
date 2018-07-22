@@ -95,11 +95,9 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: jira
-  annotations:
-    kubernetes.io/tls-acme: "true"
 spec:
   tls:
-  - secretName: jira-gorilych-ru-tls
+  - secretName: san-gorilych-ru-tls
     hosts:
     - jira.gorilych.ru
   rules:
