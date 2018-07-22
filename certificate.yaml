@@ -1,0 +1,35 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: san-gorilych-ru-certificate
+  namespace: default
+spec:
+  secretName: san-gorilych-ru-tls
+  issuerRef:
+    name: letsencrypt
+    kind: Issuer
+  commonName: gorilych.ru
+  dnsNames:
+  - gorilych.ru
+  - confluence.gorilych.ru
+  - git.gorilych.ru
+  - jira.gorilych.ru
+  - jupyter.gorilych.ru
+  - k8s.gorilych.ru
+  - router.gorilych.ru
+  - seafile.gorilych.ru
+  # w/a for rewrite-target from https://github.com/jetstack/cert-manager/issues/286#issuecomment-361033891
+  acme:
+    config:
+    - http01: { ingressClass: nginx }
+      domains:
+      - gorilych.ru
+      - confluence.gorilych.ru
+      - git.gorilych.ru
+      - jira.gorilych.ru
+      - jupyter.gorilych.ru
+      - k8s.gorilych.ru
+      - router.gorilych.ru
+      - seafile.gorilych.ru
+
+
