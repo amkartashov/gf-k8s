@@ -7,7 +7,7 @@ spec:
   secretName: san-gorilych-ru-tls
   issuerRef:
     name: letsencrypt
-    kind: Issuer
+    kind: ClusterIssuer
   commonName: gorilych.ru
   dnsNames:
   - gorilych.ru
