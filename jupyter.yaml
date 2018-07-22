@@ -25,6 +25,9 @@ spec:
       - name: jupyter
         image: jupyter/minimal-notebook
         imagePullPolicy: IfNotPresent
+        env:
+        - name: LANG
+          value: ru
         args:
         - start-notebook.sh
         - "--ip='*'"
