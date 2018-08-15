@@ -1,22 +1,4 @@
 ---
-kind: PersistentVolume
-apiVersion: v1
-metadata:
-  name: postgres
-  labels:
-    type: local
-    name: postgres
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 5Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /data/postgres
-    # mkdir -p /data/postgres
-    # chown 999.999 /data/postgres
----
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -49,9 +31,12 @@ spec:
         app: postgres
     spec:
       volumes:
+      # mkdir -p /data/postgres
+      # chown 999.999 /data/postgres
       - name: postgres
-        persistentVolumeClaim:
-          claimName: postgres
+        hostPath:
+          path: /data/postgres
+          type:
       containers:
       - name: postgres
         image: postgres
