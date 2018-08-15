@@ -1,37 +1,4 @@
 ---
-kind: PersistentVolume
-apiVersion: v1
-metadata:
-  name: confluence
-  labels:
-    type: local
-    name: confluence
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /data/confluence
-    # mkdir -p /data/confluence
-    # chown 2.2 /data/confluence
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: confluence
-spec:
-  storageClassName: manual
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
-  selector:
-    matchLabels:
-      name: confluence
----
 # TODO 1
 # Add readiness probe
 # https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
@@ -58,9 +25,12 @@ spec:
         app: confluence
     spec:
       volumes:
+      # mkdir -p /data/confluence
+      # chown 2.2 /data/confluence
       - name: confluence
-        persistentVolumeClaim:
-          claimName: confluence
+        hostPath:
+          path: /data/confluence 
+          type:
       containers:
       - name: confluence
         image: atlassian/confluence-server:latest
