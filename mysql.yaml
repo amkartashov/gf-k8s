@@ -25,6 +25,9 @@ spec:
       containers:
       - name: mariadb
         image: mariadb
+        env:
+        - name: MYSQL_ROOT_PASSWORD_FILE
+          value: /var/lib/mysql/rootpwd
         ports:
         - containerPort: 3306
           name: mysql
