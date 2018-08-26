@@ -56,6 +56,7 @@ metadata:
 spec:
   selector:
     app: mariadb
+  externalTrafficPolicy: Local
   ports:
   - name: mysql
     protocol: TCP
