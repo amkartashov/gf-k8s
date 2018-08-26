@@ -1,37 +1,4 @@
 ---
-kind: PersistentVolume
-apiVersion: v1
-metadata:
-  name: mariadb
-  labels:
-    type: local
-    name: mariadb
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 5Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /data/mariadb
-    # mkdir -p /data/mariadb
-    # chown 999.999 /data/mariadb
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: mariadb
-spec:
-  storageClassName: manual
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
-  selector:
-    matchLabels:
-      name: mariadb
----
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
@@ -49,9 +16,12 @@ spec:
         app: mariadb
     spec:
       volumes:
+      # mkdir -p /data/mariadb
+      # chown 999.999 /data/mariadb
       - name: mariadb
-        persistentVolumeClaim:
-          claimName: mariadb
+        hostPath:
+          path: /data/mariadb
+          type:
       containers:
       - name: mariadb
         image: mariadb
