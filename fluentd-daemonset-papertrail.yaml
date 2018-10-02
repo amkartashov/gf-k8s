@@ -1,0 +1,90 @@
+--- 
+apiVersion: v1 
+kind: ServiceAccount 
+metadata: 
+  labels: 
+    k8s-app: fluentd
+  name: fluentd
+  namespace: kube-system 
+--- 
+kind: ClusterRole 
+apiVersion: rbac.authorization.k8s.io/v1beta1 
+metadata: 
+  name: fluentd-clusterrole 
+rules: 
+  - apiGroups: 
+      - "" 
+    resources: 
+      - "namespaces" 
+      - "pods" 
+    verbs: 
+      - "list"
+      - "get" 
+      - "watch" 
+--- 
+kind: ClusterRoleBinding 
+apiVersion: rbac.authorization.k8s.io/v1beta1 
+metadata: 
+  name: fluentd-clusterrole 
+roleRef: 
+  apiGroup: rbac.authorization.k8s.io 
+  kind: ClusterRole 
+  name: fluentd-clusterrole 
+subjects: 
+- kind: ServiceAccount 
+  name: fluentd
+  namespace: kube-system
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: fluentd
+  namespace: kube-system
+  labels:
+    k8s-app: fluentd-logging
+    version: v1
+    kubernetes.io/cluster-service: "true"
+spec:
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        k8s-app: fluentd-logging
+        version: v1
+        kubernetes.io/cluster-service: "true"
+    spec:
+      serviceAccount: fluentd
+      serviceAccountName: fluentd
+      containers:
+      - name: fluentd
+        image: fluent/fluentd-kubernetes-daemonset:v0.12-debian-papertrail
+        env:
+          - name: FLUENT_UID
+            value: "0"
+          - name: FLUENT_PAPERTRAIL_HOST
+            value: "logs7.papertrailapp.com"
+          - name: FLUENT_PAPERTRAIL_PORT
+            value: "47843"
+          - name: FLUENT_HOSTNAME
+            value: "gfk8s"
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        - name: varlibdockercontainers
+          mountPath: /var/lib/docker/containers
+          readOnly: true
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: varlog
+        hostPath:
+          path: /var/log
+      - name: varlibdockercontainers
+        hostPath:
+          path: /var/lib/docker/containers
