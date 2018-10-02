@@ -1,0 +1,61 @@
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: ws-chat-client
+  labels:
+    app: ws-chat-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ws-chat-client
+  template:
+    metadata:
+      labels:
+        app: ws-chat-client
+    spec:
+      containers:
+      - name: ws-chat-client
+        env:
+        - name: WS_SERVER
+          value: "wss://test.gorilych.ru/ws"
+        image: gorilych/websocket-chat-client:edb3013c0c54f86049d61d61baa80d4f07f1bc99
+        ports:
+        - containerPort: 80
+          name: ws-chat-client
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: ws-chat-client
+spec:
+  selector:
+    app: ws-chat-client
+  ports:
+  - name: ws-chat-client
+    protocol: TCP
+    port: 80
+    targetPort: ws-chat-client
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ws-chat-client
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+  - secretName: san-gorilych-ru-tls
+    hosts:
+    - test.gorilych.ru
+  rules:
+    - host: test.gorilych.ru
+      http:
+        paths:
+        - path: /ws-chat
+          backend:
+            serviceName: ws-chat-client
+            servicePort: 80
+
