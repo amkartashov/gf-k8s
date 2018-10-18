@@ -16,25 +16,24 @@ spec:
         app: gorilychru
     spec:
       volumes:
-      - name: gorilychrume
+      - name: gorilychru
         hostPath:
-          path: /data/gorilych.ru/me
-          type: 
-      - name: nginxdefaultconf
-        hostPath:
-          path: /data/gorilych.ru/nginx.vh.default.conf
-          type:
+          path: /data/home/www/gorilych.ru
+          type: Directory
+      #- name: nginxdefaultconf
+      #  hostPath:
+      #    path: /data/gorilych.ru/nginx.vh.default.conf
       containers:
-      - name: gorilychrume 
+      - name: gorilychru 
         image: nginx:alpine
         ports:
         - containerPort: 80
-          name: gorilychrume
+          name: gorilychru
         volumeMounts:
-          - mountPath: /usr/share/nginx/html/me
-            name: gorilychrume 
-          - mountPath: /etc/nginx/conf.d/default.conf
-            name: nginxdefaultconf
+        - mountPath: /usr/share/nginx/html
+          name: gorilychru
+        #- mountPath: /etc/nginx/conf.d/default.conf
+        #  name: nginxdefaultconf
 ---
 kind: Service
 apiVersion: v1
@@ -44,10 +43,10 @@ spec:
   selector:
     app: gorilychru
   ports:
-  - name: gorilychrume
+  - name: gorilychru
     protocol: TCP
-    port: 81
-    targetPort: gorilychrume
+    port: 80
+    targetPort: gorilychru
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -64,8 +63,7 @@ spec:
     - host: gorilych.ru
       http:
         paths:
-        - path: /me
-          backend:
+        - backend:
             serviceName: gorilychru
-            servicePort: 81
+            servicePort: 80
 

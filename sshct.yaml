@@ -21,10 +21,10 @@ spec:
         hostPath:
           path: /data/home
           type:
-      - name: gorilychrume
-        hostPath:
-          path: /data/gorilych.ru/me
-          type:
+      #- name: gorilychrume
+      #  hostPath:
+      #    path: /data/gorilych.ru/me
+      #    type:
       containers:
       - name: sshct
         image: gorilych/sshct
@@ -39,10 +39,10 @@ spec:
         - containerPort: 22
           name: ssh
         volumeMounts:
-          - mountPath: /home
-            name: home
-          - mountPath: /home/www/me
-            name: gorilychrume
+        - mountPath: /home
+          name: home
+        #- mountPath: /home/www/me
+        #  name: gorilychrume
 ---
 kind: Service
 apiVersion: v1
