@@ -1,0 +1,31 @@
+Deployment
+
+```
+sudo apt-get install      apt-transport-https      ca-certificates      curl      gnupg2      software-properties-common --no-install-recommends
+sudo add-apt-repository    "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+sudo apt-get update
+sudo apt-get install docker-ce --no-install-recommends
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+sudo vim /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl --no-install-recommends
+sudo kubeadm config images pull
+sudo swapoff -a
+sudo vim /etc/fstab
+sudo kubeadm init
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+kubectl apply -f https://raw.githubusercontent.com/romana/romana/master/containerize/specs/romana-kubeadm.yml
+kubectl taint nodes --all node-role.kubernetes.io/master-
+```
+
+Upgrade
+
+```
+sudo apt update
+sudo apt upgrade
+sudo kubeadm upgrade plan
+sudo kubeadm upgrade apply v1.12.1
+kubectl apply -f https://raw.githubusercontent.com/romana/romana/master/containerize/specs/romana-kubeadm.yml
+```
