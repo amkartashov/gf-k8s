@@ -20,6 +20,10 @@ kubectl apply -f https://raw.githubusercontent.com/romana/romana/master/containe
 kubectl taint nodes --all node-role.kubernetes.io/master-
 ```
 
++ deployed helm
++ deployed https://github.com/bitnami-labs/sealed-secrets
+
+
 Upgrade
 
 ```
