@@ -27,7 +27,7 @@ spec:
       #    type:
       containers:
       - name: sshct
-        image: gorilych/sshct
+        image: gorilych/sshct:v1.0.1
         imagePullPolicy: IfNotPresent
         env:
         - name: CTUSERPWD
