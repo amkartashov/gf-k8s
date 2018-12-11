@@ -18,6 +18,8 @@ spec:
   - router.gorilych.ru
   - seafile.gorilych.ru
   - test.gorilych.ru
+  - sso-auth.gorilych.ru
+  - grafana.gorilych.ru
   # w/a for rewrite-target from https://github.com/jetstack/cert-manager/issues/286#issuecomment-361033891
   acme:
     config:
@@ -31,5 +33,7 @@ spec:
       - router.gorilych.ru
       - seafile.gorilych.ru
       - test.gorilych.ru
+      - sso-auth.gorilych.ru
+      - grafana.gorilych.ru
 
 
