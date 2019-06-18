@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: nukkit
+  labels:
+    app: nukkit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nukkit
+  template:
+    metadata:
+      labels:
+        app: nukkit
+    spec:
+      hostname: nukkit
+      volumes:
+      - name: nukkit
+        hostPath:
+          path: /data/home/nukkit
+          type:
+      containers:
+      - name: nukkit
+        image: ixilon/nukkit:1.2.10
+        imagePullPolicy: IfNotPresent
+        env:
+        ports:
+        - containerPort: 19132
+          name: nukkit
+          protocol: UDP
+        volumeMounts:
+          - mountPath: /srv/nukkit
+            name: nukkit
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nukkit
+spec:
+  selector:
+    app: nukkit
+  ports:
+  - name: nukkit
+    protocol: UDP
+    port: 19132
+    targetPort: nukkit
+    nodePort: 30132
+  type: NodePort
