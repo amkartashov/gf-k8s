@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: dst
+spec:
+  serviceName: dst
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dst
+  template:
+    metadata:
+      labels:
+        app: dst
+    spec:
+
+      # needed because only clients with local network are allowed
+      hostNetwork: true
+
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000
+      volumes:
+      - name: dst
+        hostPath:
+          path: /data/home/dst
+          type:
+      containers:
+      - name: dst-master
+        image: gorilych/dst:v0.0.1
+        stdin: true
+        tty: true
+        volumeMounts:
+        - name: dst
+          mountPath: /data
+        args:
+        - Master
+      - name: dst-caves
+        image: gorilych/dst:v0.0.1
+        volumeMounts:
+        - name: dst
+          mountPath: /data
+        args:
+        - Caves
