@@ -11,7 +11,7 @@ spec:
     server: https://kubernetes.default.svc 
   project: default
   source:
-    path: apps/system/services
+    path: apps/services
     repoURL: git@github.com:gorilych/gf-k8s
   syncPolicy:
     automated:
