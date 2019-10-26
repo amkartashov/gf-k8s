@@ -20,7 +20,7 @@ spec:
       - name: jupyter
         hostPath:
           path: /data/home/jupyter
-          type:
+          type: DirectoryOrCreate
       containers:
       - name: jupyter
         image: jupyter/minimal-notebook
