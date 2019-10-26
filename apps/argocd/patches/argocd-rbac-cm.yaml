@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+data:
+  policy.csv: |
+    # sub for gorilych github account with id 7404372
+    g, Cgc3NDA0MzcyEgZnaXRodWI, role:admin

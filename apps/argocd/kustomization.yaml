@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: argocd
+commonLabels:
+  app.kubernetes.io/version: v1.3.0-rc2
+  app.kubernetes.io/managed-by: argocd
+resources:
+- namespace.yaml
+# from https://raw.githubusercontent.com/argoproj/argo-cd/v1.3.0-rc2/manifests/install.yaml
+- install.yaml
+- ingress.yaml
+patchesStrategicMerge:
+- patches/argocd-server.yaml
+- patches/argocd-cm.yaml
+- patches/argocd-rbac-cm.yaml
