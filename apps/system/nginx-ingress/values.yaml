@@ -1,6 +1,7 @@
 nginx-ingress:
   controller:
     service:
+      omitClusterIP: true
       type: NodePort
       nodePorts:
         # port forwarding on router
