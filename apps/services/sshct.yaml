@@ -20,10 +20,11 @@ spec:
       - name: home
         hostPath:
           path: /data/home
-          type:
+          type: DirectoryOrCreate
       - name: dockersock
         hostPath:
           path: /var/run/docker.sock
+          type: Socket
       #- name: gorilychrume
       #  hostPath:
       #    path: /data/gorilych.ru/me
