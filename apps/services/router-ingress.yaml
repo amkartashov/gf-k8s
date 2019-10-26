@@ -23,7 +23,7 @@ kind: Ingress
 metadata:
   name: ingress-rules
   annotations:
-    nginx.ingress.kubernetes.io/secure-backends: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
 spec:
   tls:
   - secretName: san-gorilych-ru-tls
