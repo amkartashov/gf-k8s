@@ -8,9 +8,12 @@ metadata:
 spec:
   destination:
     namespace: nginx-ingress
-    server: 
+    server: https://kubernetes.default.svc 
   project: default
   source:
     path: apps/system/nginx-ingress
     repoURL: git@github.com:gorilych/gf-k8s
-    targetRevision: argocd-gitops
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
