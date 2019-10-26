@@ -18,7 +18,6 @@ spec:
   - router.gorilych.ru
   - seafile.gorilych.ru
   - grafana.gorilych.ru
-  # w/a for rewrite-target from https://github.com/jetstack/cert-manager/issues/286#issuecomment-361033891
   acme:
     config:
     - http01: { ingressClass: nginx }
