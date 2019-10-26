@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-ingress
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: nginx-ingress
+    server: 
+  project: default
+  source:
+    path: apps/system/nginx-ingress
+    repoURL: git@github.com:gorilych/gf-k8s
+    targetRevision: argocd-gitops
