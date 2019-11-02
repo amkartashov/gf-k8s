@@ -60,6 +60,8 @@ metadata:
   name: jupyter
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 32m
+    nginx.ingress.kubernetes.io/auth-url: https://oauth2.gorilych.ru/oauth2/auth
+    nginx.ingress.kubernetes.io/auth-signin: https://oauth2.gorilych.ru/oauth2/start?rd=$scheme://$host$request_uri
 spec:
   tls:
   - secretName: san-gorilych-ru-tls
