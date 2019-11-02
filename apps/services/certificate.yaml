@@ -18,6 +18,7 @@ spec:
   - router.gorilych.ru
   - seafile.gorilych.ru
   - grafana.gorilych.ru
+  - oauth2.gorilych.ru
   acme:
     config:
     - http01: { ingressClass: nginx }
@@ -30,5 +31,6 @@ spec:
       - router.gorilych.ru
       - seafile.gorilych.ru
       - grafana.gorilych.ru
+      - oauth2.gorilych.ru
 
 
