@@ -13,10 +13,11 @@ oauth2-proxy:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: nginx
+      cert-manager.io/cluster-issuer: letsencrypt
     hosts:
     - oauth2.gorilych.ru
     tls:
     - hosts:
       - oauth2.gorilych.ru
-      secretName: san-gorilych-ru-tls
+      secretName: oauth2-gorilych-ru-tls
 
