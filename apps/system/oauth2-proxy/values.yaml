@@ -9,7 +9,7 @@ oauth2-proxy:
     enabled: true
     restricted_access: |-
       gorilych@gmail.com
-  ngress:
+  ingress:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: nginx
