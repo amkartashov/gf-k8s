@@ -13,7 +13,3 @@ spec:
   source:
     path: apps/services
     repoURL: git@github.com:gorilych/gf-k8s
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
