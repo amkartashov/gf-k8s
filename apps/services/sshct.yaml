@@ -25,6 +25,10 @@ spec:
         hostPath:
           path: /var/run/docker.sock
           type: Socket
+      - name: kvm
+        hostPath:
+          path: /dev/kvm
+          type: CharDevice
       #- name: gorilychrume
       #  hostPath:
       #    path: /data/gorilych.ru/me
@@ -47,6 +51,8 @@ spec:
           name: home
         - mountPath: /var/run/docker.sock
           name: dockersock
+        - mountPath: /dev/kvm
+          name: kvm
         #- mountPath: /home/www/me
         #  name: gorilychrume
 ---

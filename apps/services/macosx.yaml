@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: macosx
+spec:
+  serviceName: macosx
+  replicas: 1
+  selector:
+    matchLabels:
+      app: macosx
+  template:
+    metadata:
+      labels:
+        app: macosx
+    spec:
+      volumes:
+      - name: backingimage
+        hostPath:
+          path: /data/macosx
+          type:
+      containers:
+      - name: macosx
+        image: cleafy/sxkdvm
+        volumeMounts:
+        - name: backingimage
+          mountPath: /backing
+        ports:
+        - containerPort: 2222
+          name: ssh
+        - containerPort: 5800
+          name: vnc1
+        - containerPort: 5900
+          name: vnc2
+        securityContext:
+          privileged: true
+
