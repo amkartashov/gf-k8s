@@ -23,11 +23,13 @@ spec:
           type: DirectoryOrCreate
       containers:
       - name: jupyter
-        image: jupyter/minimal-notebook
+        image: gorilych/jupyter:v0.0.3
         imagePullPolicy: IfNotPresent
         env:
         - name: LANG
           value: ru
+        - name: LD_LIBRARY_PATH
+          value: /opt/conda/lib
         args:
         - start-notebook.sh
         - "--ip='*'"
