@@ -25,3 +25,10 @@ prometheus-operator:
     enabled: false
   nodeExporter:
     enabled: false
+# because of https://github.com/helm/helm/issues/4490
+kubeStateMetrics:
+  enabled: false
+nodeExporter:
+  enabled: false
+grafana:
+  enabled: false
