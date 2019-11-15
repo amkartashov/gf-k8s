@@ -1033,6 +1033,8 @@ spec:
                 type: object
               type: array
             observedAt:
+              description: ObservedAt indicates when the application state was updated
+                without querying latest git state
               format: date-time
               type: string
             operationState:
@@ -1510,6 +1512,8 @@ spec:
               - startedAt
               type: object
             reconciledAt:
+              description: ReconciledAt indicates when the application state was reconciled
+                using the latest git version
               format: date-time
               type: string
             resources:
@@ -2683,23 +2687,6 @@ kind: Service
 metadata:
   labels:
     app.kubernetes.io/component: server
-    app.kubernetes.io/name: argocd-server-metrics
-    app.kubernetes.io/part-of: argocd
-  name: argocd-server-metrics
-spec:
-  ports:
-  - name: metrics
-    port: 8083
-    protocol: TCP
-    targetPort: 8083
-  selector:
-    app.kubernetes.io/name: argocd-server
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app.kubernetes.io/component: server
     app.kubernetes.io/name: argocd-server
     app.kubernetes.io/part-of: argocd
   name: argocd-server
@@ -2713,6 +2700,23 @@ spec:
     port: 443
     protocol: TCP
     targetPort: 8080
+  selector:
+    app.kubernetes.io/name: argocd-server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: server
+    app.kubernetes.io/name: argocd-server-metrics
+    app.kubernetes.io/part-of: argocd
+  name: argocd-server-metrics
+spec:
+  ports:
+  - name: metrics
+    port: 8083
+    protocol: TCP
+    targetPort: 8083
   selector:
     app.kubernetes.io/name: argocd-server
 ---
@@ -2742,7 +2746,7 @@ spec:
         - "20"
         - --operation-processors
         - "10"
-        image: argoproj/argocd:v1.3.0-rc2
+        image: argoproj/argocd:v1.3.0
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
@@ -2796,7 +2800,7 @@ spec:
         - cp
         - /usr/local/bin/argocd-util
         - /shared
-        image: argoproj/argocd:v1.3.0-rc2
+        image: argoproj/argocd:v1.3.0
         imagePullPolicy: Always
         name: copyutil
         volumeMounts:
@@ -2860,7 +2864,7 @@ spec:
         - argocd-repo-server
         - --redis
         - argocd-redis:6379
-        image: argoproj/argocd:v1.3.0-rc2
+        image: argoproj/argocd:v1.3.0
         imagePullPolicy: Always
         livenessProbe:
           initialDelaySeconds: 5
@@ -2911,7 +2915,7 @@ spec:
         - argocd-server
         - --staticassets
         - /shared/app
-        image: argoproj/argocd:v1.3.0-rc2
+        image: argoproj/argocd:v1.3.0
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
