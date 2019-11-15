@@ -1,16 +1,17 @@
 
+create namespaces
+
+$ kubectl --context=gullfaxi apply -R apps/namespaces
 
 install nginx-ingress
 
 $ helm dep update apps/system/nginx-ingress
-$ kubectl --context=gullfaxi create ns nginx-ingress
 $ helm template --name nginx-ingress --namespace nginx-ingress apps/system/nginx-ingress | kubectl --context=gullfaxi --namespace nginx-ingress apply -f -
 
 install cert-manager with cluster issuer
 
 $ helm repo add jetstack https://charts.jetstack.io
 $ helm dep update apps/system/cert-manager
-$ kubectl --context=gullfaxi create ns cert-manager
 $ helm template --name cert-manager --namespace cert-manager apps/system/cert-manager | kubectl --context=gullfaxi --namespace cert-manager apply -f -
 
 install argocd
