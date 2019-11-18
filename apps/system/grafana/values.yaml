@@ -39,7 +39,7 @@ grafana:
       datasources:
       - name: Prometheus
         type: prometheus
-        access: direct
+        access: proxy
         url: http://prometheus-operated.monitoring:9090
         isDefault: true
         editable: false
