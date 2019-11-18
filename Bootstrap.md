@@ -49,6 +49,7 @@ $ argocd app create main \
     --dest-server https://kubernetes.default.svc \
     --repo git@github.com:gorilych/gf-k8s.git \
     --path main \
+    --directory-recurse \
     --sync-policy automated \
     --self-heal --auto-prune
 ```
