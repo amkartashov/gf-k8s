@@ -1,4 +1,6 @@
 prometheus-operator:
+  nameOverride: prometheus-operator
+  fullnameOverride: prometheus-operator
   prometheus:
     enabled: true
     prometheusSpec:
@@ -19,6 +21,8 @@ prometheus-operator:
               requests:
                 storage: 10Gi
   grafana:
+    nameOverride: grafana
+    fullnameOverride: grafana
     enabled: true
     # secret grafana should be created manually
     # it should contain:
