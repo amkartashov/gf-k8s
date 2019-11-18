@@ -12,8 +12,6 @@ spec:
   project: default
   source:
     path: apps/system/monitoring
-    directory:
-      recurse: true
     repoURL: git@github.com:gorilych/gf-k8s
   syncPolicy:
     automated:
