@@ -1,8 +1,12 @@
 prometheus-operator:
   nameOverride: prometheus-operator
   fullnameOverride: prometheus-operator
+  serviceMonitor:
+    selfMonitor: false
   prometheus:
     enabled: true
+    serviceMonitor:
+      selfMonitor: false
     prometheusSpec:
       version: v2.14.0
       replicas: 1
@@ -25,6 +29,8 @@ prometheus-operator:
     fullnameOverride: grafana
     defaultDashboardsEnabled: false
     enabled: true
+    serviceMonitor:
+      selfMonitor: false
     # secret grafana should be created manually
     # it should contain:
     #   admin-user
