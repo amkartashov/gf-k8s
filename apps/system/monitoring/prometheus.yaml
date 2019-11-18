@@ -3,3 +3,4 @@ kind: Prometheus
 metadata:
   name: prometheus
 spec:
+  replicas: 1
