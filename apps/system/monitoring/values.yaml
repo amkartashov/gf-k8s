@@ -23,6 +23,7 @@ prometheus-operator:
   grafana:
     nameOverride: grafana
     fullnameOverride: grafana
+    defaultDashboardsEnabled: false
     enabled: true
     # secret grafana should be created manually
     # it should contain:
