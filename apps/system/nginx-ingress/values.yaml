@@ -1,5 +1,7 @@
 nginx-ingress:
   controller:
+    metrics:
+      enabled: true
     service:
       omitClusterIP: true
       type: NodePort
