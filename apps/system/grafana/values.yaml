@@ -29,3 +29,13 @@ grafana:
       auth_url: https://github.com/login/oauth/authorize
       token_url: https://github.com/login/oauth/access_token
       api_url: https://api.github.com/user
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+      - name: Prometheus
+        type: prometheus
+        access: direct
+        url: http://prometheus-operated.monitoring:9090
+        isDefault: true
+        editable: false
