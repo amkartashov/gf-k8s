@@ -17,6 +17,10 @@ grafana:
     - hosts:
       - grafana.gorilych.ru
       secretName: grafana-tls
+  persistence:
+    enabled: true
+    type: pvc
+    existingClaim: grafana
   grafana.ini:
     server:
       root_url: https://grafana.gorilych.ru
