@@ -3,4 +3,15 @@ kind: Prometheus
 metadata:
   name: prometheus
 spec:
+  version: v2.14.0
   replicas: 1
+  securityContext:
+    runAsUser: 1000
+  walCompression: true
+  storage:
+    volumeClaimTemplate:
+      spec:
+        volumeName: prometheus
+        resources:
+          requests:
+            storage: 10Gi
