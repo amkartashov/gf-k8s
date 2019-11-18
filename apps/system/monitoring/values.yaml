@@ -4,6 +4,8 @@ prometheus-operator:
   prometheusOperator:
     admissionWebhooks:
       enabled: false
+    tlsProxy:
+      enabled: false
     serviceMonitor:
       selfMonitor: false
   prometheus:
