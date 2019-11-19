@@ -29,5 +29,5 @@ graylog:
         secretName: graylog-tls
     mongodb:
       uri:
-        mongodb://mongodb:27017
+        mongodb://mongodb:27017/graylog
 
