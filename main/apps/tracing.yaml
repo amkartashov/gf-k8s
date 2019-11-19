@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tracing
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: tracing
+    server: https://kubernetes.default.svc 
+  project: default
+  source:
+    path: apps/system/tracing
+    repoURL: git@github.com:gorilych/gf-k8s
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
