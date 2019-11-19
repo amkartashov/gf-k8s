@@ -3,6 +3,13 @@ tags:
   install-elasticsearch: false
   install-mongodb: false
 
+mongodb:
+  nameOverride: mongo
+  fullnameOverride: mongo
+  usePassword: false
+  persistence:
+    existingClaim: mongo
+
 graylog:
   nameOverride: graylog
   fullnameOverride: graylog
@@ -19,4 +26,7 @@ graylog:
       - hosts:
         - graylog.gorilych.ru
         secretName: graylog-tls
+    mongodb:
+      uri:
+        mongodb://mongo:27017
 
