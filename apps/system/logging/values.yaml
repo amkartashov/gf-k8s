@@ -13,6 +13,7 @@ mongodb:
 elasticsearch:
   nameOverride: elasticsearch
   fullnameOverride: elasticsearch
+  imageTag: '6.8.4'
   replicas: 1
   volumeClaimTemplate:
     volumeName: elasticsearch
