@@ -2,3 +2,7 @@
 tags:
   install-elasticsearch: false
   install-mongodb: false
+
+graylog:
+  nameOverride: graylog
+  fullnameOverride: graylog
