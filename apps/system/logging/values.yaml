@@ -40,4 +40,7 @@ graylog:
       uri: mongodb://mongodb:27017/graylog
     elasticsearch:
       hosts: http://elasticsearch-master:9200
+    plugins:
+    - name: graylog-plugin-auth-sso-3.1.0.jar
+      url: https://github.com/Graylog2/graylog-plugin-auth-sso/releases/download/3.1.0/graylog-plugin-auth-sso-3.1.0.jar
 
