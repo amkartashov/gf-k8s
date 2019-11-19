@@ -25,6 +25,8 @@ fluent-bit:
   input:
     systemd:
       enabled: true
+  filter:
+    mergeJSONLog: false
   backend:
     # no support for gelf in chart, configure manually
     type: none
