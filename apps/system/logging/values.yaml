@@ -6,3 +6,17 @@ tags:
 graylog:
   nameOverride: graylog
   fullnameOverride: graylog
+  graylog:
+    persistence:
+      enabled: false
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+      hosts:
+      - graylog.gorilych.ru
+      tls:
+      - hosts:
+        - graylog.gorilych.ru
+        secretName: graylog-tls
+
