@@ -5,3 +5,6 @@ dependencies:
 - name: mongodb
   version: '7.4.5'
   repository: '@stable'
+- name: elasticsearch
+  version: '7.4.1'
+  repository: https://helm.elastic.co

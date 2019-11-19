@@ -10,6 +10,11 @@ mongodb:
   persistence:
     existingClaim: mongodb
 
+elasticsearch:
+  replicas: 1
+  volumeClaimTemplate:
+    volumeName: elasticsearch
+
 graylog:
   nameOverride: graylog
   fullnameOverride: graylog
@@ -28,6 +33,7 @@ graylog:
         - graylog.gorilych.ru
         secretName: graylog-tls
     mongodb:
-      uri:
-        mongodb://mongodb:27017/graylog
+      uri: mongodb://mongodb:27017/graylog
+    elasticsearch:
+      hosts: http://elasticsearch-master:9200
 
