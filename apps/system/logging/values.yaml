@@ -1,0 +1,4 @@
+# don't install as graylog deps, because versions are outdated
+tags:
+  install-elasticsearch: false
+  install-mongodb: false
