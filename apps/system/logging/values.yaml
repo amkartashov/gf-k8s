@@ -27,6 +27,7 @@ fluent-bit:
       enabled: true
   filter:
     mergeJSONLog: false
+  trackOffsets: true
   backend:
     # no support for gelf in chart, configure manually
     type: none
