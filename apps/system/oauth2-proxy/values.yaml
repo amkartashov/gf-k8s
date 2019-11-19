@@ -8,6 +8,7 @@ oauth2-proxy:
     provider: github
     cookie-domain: .gorilych.ru
     whitelist-domain: .gorilych.ru
+    set-xauthrequest: true
   authenticatedEmailsFile:
     enabled: true
     restricted_access: |-
