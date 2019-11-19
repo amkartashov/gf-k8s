@@ -4,11 +4,11 @@ tags:
   install-mongodb: false
 
 mongodb:
-  nameOverride: mongo
-  fullnameOverride: mongo
+  nameOverride: mongodb
+  fullnameOverride: mongodb
   usePassword: false
   persistence:
-    existingClaim: mongo
+    existingClaim: mongodb
 
 graylog:
   nameOverride: graylog
@@ -28,5 +28,5 @@ graylog:
         secretName: graylog-tls
     mongodb:
       uri:
-        mongodb://mongo:27017
+        mongodb://mongodb:27017
 
