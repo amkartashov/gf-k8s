@@ -7,7 +7,7 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: tracing
+    namespace: observability
     server: https://kubernetes.default.svc 
   project: default
   source:
