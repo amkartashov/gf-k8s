@@ -11,6 +11,8 @@ mongodb:
     existingClaim: mongodb
 
 elasticsearch:
+  nameOverride: elasticsearch
+  fullnameOverride: elasticsearch
   replicas: 1
   volumeClaimTemplate:
     volumeName: elasticsearch
