@@ -14,6 +14,7 @@ graylog:
   nameOverride: graylog
   fullnameOverride: graylog
   graylog:
+    replicas: 1
     persistence:
       enabled: false
     ingress:
