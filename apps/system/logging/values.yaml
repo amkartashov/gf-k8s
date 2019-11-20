@@ -35,12 +35,27 @@ fluent-bit:
     output: |
       [OUTPUT]
         Name          gelf
-        Match         *
+        Match         kube.*
         Host          graylog-udp
         Port          12201
         Mode          udp
         Gelf_Short_Message_Key log
-
+  rawConfig: |
+    @INCLUDE fluent-bit-service.conf
+    @INCLUDE fluent-bit-input.conf
+    @INCLUDE fluent-bit-filter.conf
+    [FILTER]
+      Name   nest
+      Match  kube.*
+      Operation lift
+      Nested_under kubernetes
+    [FILTER]
+      Name   modify
+      Match  kube.*
+      Rename container_name container
+      Rename namespace_name namespace
+      Rename pod_name pod
+    @INCLUDE fluent-bit-output.conf
 
 graylog:
   nameOverride: graylog
