@@ -5,6 +5,8 @@ nginx-ingress:
       service:
         omitClusterIP: true
     service:
+      # preserve source IPs
+      externalTrafficPolicy: Local
       omitClusterIP: true
       type: NodePort
       nodePorts:
