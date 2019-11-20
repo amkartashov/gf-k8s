@@ -55,6 +55,10 @@ fluent-bit:
       Rename container_name container
       Rename namespace_name namespace
       Rename pod_name pod
+    [FILTER]
+      Name   record_modifier
+      Match  kube.*
+      Remove_key time
     @INCLUDE fluent-bit-output.conf
 
 graylog:
