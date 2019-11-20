@@ -24,7 +24,7 @@ fluent-bit:
   fullnameOverride: fluent-bit
   input:
     systemd:
-      enabled: true
+      enabled: false
   filter:
     mergeJSONLog: false
   trackOffsets: true
@@ -40,6 +40,7 @@ fluent-bit:
         Port          12201
         Mode          udp
         Gelf_Short_Message_Key log
+
 
 graylog:
   nameOverride: graylog
