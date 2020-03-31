@@ -13,7 +13,7 @@ mongodb:
 elasticsearch:
   nameOverride: elasticsearch
   fullnameOverride: elasticsearch
-  imageTag: '6.8.4'
+  imageTag: '6.8.7'
   replicas: 1
   minimumMasterNodes: 1
   volumeClaimTemplate:
@@ -22,6 +22,9 @@ elasticsearch:
 fluent-bit:
   nameOverride: fluent-bit
   fullnameOverride: fluent-bit
+  image:
+    fluent_bit:
+      tag: 1.4.1
   input:
     systemd:
       enabled: false
@@ -102,7 +105,7 @@ graylog:
     mongodb:
       uri: mongodb://mongodb:27017/graylog
     elasticsearch:
-      hosts: http://elasticsearch-master:9200
+      hosts: http://elasticsearch:9200
     plugins:
     - name: graylog-plugin-auth-sso-3.1.0.jar
       url: https://github.com/Graylog2/graylog-plugin-auth-sso/releases/download/3.1.0/graylog-plugin-auth-sso-3.1.0.jar
