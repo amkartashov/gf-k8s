@@ -16,7 +16,7 @@ subsets:
   - addresses:
       - ip: 192.168.1.1
     ports:
-      - port: 44443
+      - port: 443
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
