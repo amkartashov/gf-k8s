@@ -49,8 +49,10 @@ prometheus-operator:
   kubeProxy:
     enabled: false
   kubeStateMetrics:
-    enabled: false
+    enabled: true
   nodeExporter:
+    enabled: true
+  grafana:
     enabled: false
 # because of https://github.com/helm/helm/issues/4490
 kubeStateMetrics:
