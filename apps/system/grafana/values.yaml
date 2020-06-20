@@ -37,6 +37,7 @@ grafana:
   plugins:
   # see also https://github.com/devopsprodigy/kubegraf#installation
   - devopsprodigy-kubegraf-app
+  - grafana-piechart-panel
   grafana.ini:
     server:
       root_url: https://grafana.gorilych.ru
