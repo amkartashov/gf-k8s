@@ -17,10 +17,8 @@ prometheus-operator:
       securityContext:
         runAsUser: 1000
       walCompression: true
-      serviceMonitorSelector:
-        any: true
-      serviceMonitorNamespaceSelector:
-        any: true
+      serviceMonitorSelector: {}
+      serviceMonitorNamespaceSelector: {}
       storage:
         volumeClaimTemplate:
           spec:
