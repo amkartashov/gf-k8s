@@ -31,7 +31,7 @@ prometheus-operator:
   defaultRules:
     create: false
   kubelet:
-    enabled: false
+    enabled: true
   kubeControllerManager:
     enabled: false
   kubeScheduler:
