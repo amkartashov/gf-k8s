@@ -29,68 +29,6 @@ prometheus-operator:
             resources:
               requests:
                 storage: 10Gi
-  grafana:
-    nameOverride: grafana
-    fullnameOverride: grafana
-    defaultDashboardsEnabled: false
-    enabled: true
-    serviceMonitor:
-      selfMonitor: false
-    # secret grafana should be created manually
-    # it should contain:
-    #   admin-user
-    #   admin-password
-    #   GF_AUTH_GITHUB_CLIENT_SECRET
-    admin:
-      existingSecret: grafana
-    envFromSecret: grafana
-    ingress:
-      enabled: true
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt
-      hosts:
-      - grafana.gorilych.ru
-      tls:
-      - hosts:
-        - grafana.gorilych.ru
-        secretName: grafana-tls
-    persistence:
-      enabled: true
-      type: pvc
-      existingClaim: grafana
-    grafana.ini:
-      server:
-        root_url: https://grafana.gorilych.ru
-      auth.github:
-        enabled: true
-        allow_sign_up: false
-        client_id: 6494b9ed39a915d9ac20
-        # client_secret: in grafana secret
-        scopes: user:email,read:org
-        auth_url: https://github.com/login/oauth/authorize
-        token_url: https://github.com/login/oauth/access_token
-        api_url: https://api.github.com/user
-    dashboardProviders:
-      dashboardproviders.yaml:
-        apiVersion: 1
-        providers:
-        - name: default
-          folder: ''
-          type: file
-          disableDeletion: false
-          editable: true
-          allowUiUpdates: false
-          options:
-            path: /var/lib/grafana/dashboards/default
-    dashboards:
-      default:
-        nginx-ingress:
-          gnetId: 9614
-          revision: 1
-          datasource: Prometheus
-  sidecar:
-    datasources:
-      enabled: true
   alertmanager:
     enabled: false
   defaultRules:
@@ -121,4 +59,4 @@ kubeStateMetrics:
 nodeExporter:
   enabled: false
 grafana:
-  enabled: true
+  enabled: false
