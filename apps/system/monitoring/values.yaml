@@ -13,7 +13,6 @@ prometheus-operator:
     serviceMonitor:
       selfMonitor: false
     prometheusSpec:
-      version: v2.14.0
       replicas: 1
       securityContext:
         runAsUser: 1000
@@ -55,8 +54,8 @@ prometheus-operator:
     enabled: false
 # because of https://github.com/helm/helm/issues/4490
 kubeStateMetrics:
-  enabled: false
+  enabled: true
 nodeExporter:
-  enabled: false
+  enabled: true
 grafana:
   enabled: false
