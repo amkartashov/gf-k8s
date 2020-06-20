@@ -1,112 +1,41 @@
-# don't install as graylog deps, because versions are outdated
-tags:
-  install-elasticsearch: false
-  install-mongodb: false
-
-mongodb:
-  nameOverride: mongodb
-  fullnameOverride: mongodb
-  usePassword: false
+loki:
+  #extraArgs:
+  #  log.level: debug
+  nameOverride: loki
+  fullnameOverride: loki
+  serviceAccount:
+    create: true
+    annotations:
+      iam.gke.io/gcp-service-account:  loki-sa@projectid.iam.gserviceaccount.com # will be updated in parameters
+  serviceMonitor:
+    enabled: true
+    interval: 10s
+    scrapeTimeout: 5s
+  resources:
+    limits:
+      cpu: 150m
+      #memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
   persistence:
-    existingClaim: mongodb
+    enabled: true
+    size: 10Gi
+    existingClaim: loki
 
-elasticsearch:
-  nameOverride: elasticsearch
-  fullnameOverride: elasticsearch
-  imageTag: '6.8.7'
-  replicas: 1
-  minimumMasterNodes: 1
-  volumeClaimTemplate:
-    volumeName: elasticsearch
-
-fluent-bit:
-  nameOverride: fluent-bit
-  fullnameOverride: fluent-bit
-  image:
-    fluent_bit:
-      tag: 1.4.1
-  input:
-    systemd:
-      enabled: false
-  filter:
-    mergeJSONLog: false
-  trackOffsets: true
-  backend:
-    # no support for gelf in chart, configure manually
-    type: none
-  extraEntries:
-    output: |
-      [OUTPUT]
-        Name          gelf
-        Match         kube.*
-        Host          graylog-udp
-        Port          12201
-        Mode          udp
-        Gelf_Short_Message_Key log
-  rawConfig: |
-    @INCLUDE fluent-bit-service.conf
-    @INCLUDE fluent-bit-input.conf
-    @INCLUDE fluent-bit-filter.conf
-    [FILTER]
-      Name   nest
-      Match  kube.*
-      Operation lift
-      Nested_under kubernetes
-    [FILTER]
-      Name   modify
-      Match  kube.*
-      Rename container_name container
-      Rename namespace_name namespace
-      Rename pod_name pod
-    [FILTER]
-      Name   record_modifier
-      Match  kube.*
-      Remove_key time
-    @INCLUDE fluent-bit-output.conf
-
-graylog:
-  nameOverride: graylog
-  fullnameOverride: graylog
-  graylog:
-    replicas: 1
-    persistence:
-      enabled: false
-    ingress:
-      enabled: true
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt
-        nginx.ingress.kubernetes.io/auth-url: https://oauth2.gorilych.ru/oauth2/auth
-        nginx.ingress.kubernetes.io/auth-signin: https://oauth2.gorilych.ru/oauth2/start?rd=$scheme://$host$request_uri
-        nginx.ingress.kubernetes.io/auth-response-headers: X-Forwarded-Email,X-Forwarded-User,X-Roles
-        nginx.ingress.kubernetes.io/configuration-snippet: |
-          auth_request_set $name_upstream_1 $upstream_cookie_name_1;
-          auth_request_set $user   $upstream_http_x_auth_request_user;
-          auth_request_set $email  $upstream_http_x_auth_request_email;
-          proxy_set_header X-Forwarded-User  $user;
-          proxy_set_header X-Forwarded-Email $email;
-          access_by_lua_block {
-            if ngx.var.name_upstream_1 ~= "" then
-              ngx.header["Set-Cookie"] = "name_1=" .. ngx.var.name_upstream_1 .. ngx.var.auth_cookie:match("(; .*)")
-            end
-          }
-      hosts:
-      - graylog.gorilych.ru
-      tls:
-      - hosts:
-        - graylog.gorilych.ru
-        secretName: graylog-tls
-    input:
-      udp:
-        service:
-          type: ClusterIP
-        ports:
-        - name: gelf
-          port: 12201
-    mongodb:
-      uri: mongodb://mongodb:27017/graylog
-    elasticsearch:
-      hosts: http://elasticsearch:9200
-    plugins:
-    - name: graylog-plugin-auth-sso-3.1.0.jar
-      url: https://github.com/Graylog2/graylog-plugin-auth-sso/releases/download/3.1.0/graylog-plugin-auth-sso-3.1.0.jar
-
+promtail:
+  nameOverride: promtail
+  fullnameOverride: promtail
+  serviceMonitor:
+    enabled: true
+    interval: 10s
+    scrapeTimeout: 5s
+  loki:
+    serviceName: loki
+  resources:
+    limits:
+      cpu: 100m
+      #memory: 128Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi

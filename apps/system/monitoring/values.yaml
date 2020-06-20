@@ -88,6 +88,9 @@ prometheus-operator:
           gnetId: 9614
           revision: 1
           datasource: Prometheus
+  sidecar:
+    datasources:
+      enabled: true
   alertmanager:
     enabled: false
   defaultRules:
