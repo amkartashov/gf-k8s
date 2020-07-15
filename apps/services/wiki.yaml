@@ -1,0 +1,65 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wiki
+  labels:
+    app: wiki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wiki
+  template:
+    metadata:
+      labels:
+        app: wiki
+    spec:
+      hostname: wiki
+      volumes:
+      - name: data
+        hostPath:
+          path: /data/wiki
+          type: DirectoryOrCreate
+      containers:
+      - name: wiki
+        image: requarks/wiki:2.4
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: CONFIG_FILE
+          value: /data/config.yml
+        ports:
+        - containerPort: 3000
+          name: http
+        volumeMounts:
+        - mountPath: /data
+          name: data
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: wiki
+spec:
+  selector:
+    app: wiki
+  ports:
+  - name: http
+    targetPort: http
+    port: 80
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: wiki
+spec:
+  tls:
+  - secretName: san-gorilych-ru-tls
+    hosts:
+    - wiki.gorilych.ru
+  rules:
+    - host: wiki.gorilych.ru
+      http:
+        paths:
+        - backend:
+            serviceName: wiki
+            servicePort: http
