@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minecraft
+  namespace: argocd
+spec:
+  destination:
+    namespace: minecraft
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: apps/minecraft
+    repoURL: git@github.com:gorilych/gf-k8s
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
