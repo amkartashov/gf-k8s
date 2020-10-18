@@ -17,6 +17,9 @@ data:
     - name: jetstack
       type: helm
       url: https://charts.jetstack.io
+    - name: itzg
+      type: helm
+      url: https://itzg.github.io/minecraft-server-charts/
   repository.credentials: |
     - url: git@github.com:gorilych/
       sshPrivateKeySecret:
