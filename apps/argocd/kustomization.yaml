@@ -9,6 +9,5 @@ resources:
 - install.yaml
 - ingress.yaml
 patchesStrategicMerge:
-- patches/argocd-server.yaml
 - patches/argocd-cm.yaml
 - patches/argocd-rbac-cm.yaml

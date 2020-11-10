@@ -1,53 +1,23 @@
----
-apiVersion: cert-manager.io/v1alpha2
-kind: Certificate
-metadata: 
-  name: argocd
-spec:
-  secretName: argocd-secret
-  dnsNames: 
-  - argocd.gorilych.ru
-  - argocd-grpc.gorilych.ru
-  issuerRef:
-    name: letsencrypt
-    kind: ClusterIssuer
----
+# https://argoproj.github.io/argo-cd/operator-manual/ingress/#ssl-passthrough-with-cert-manager-and-lets-encrypt
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: argocd-server-http-ingress
+  name: argocd-server-ingress
   annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
     kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
   rules:
   - http:
       paths:
       - backend:
           serviceName: argocd-server
-          servicePort: http
+          servicePort: https
     host: argocd.gorilych.ru
   tls:
   - hosts:
     - argocd.gorilych.ru
     secretName: argocd-secret
----
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: argocd-server-grpc-ingress
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/backend-protocol: GRPC
-spec:
-  rules:
-  - http:
-      paths:
-      - backend:
-          serviceName: argocd-server
-          servicePort: http
-    host: argocd-grpc.gorilych.ru
-  tls:
-  - hosts:
-    - argocd-grpc.gorilych.ru
-    secretName: argocd-secret
-
