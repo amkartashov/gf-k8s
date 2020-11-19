@@ -25,6 +25,10 @@ spec:
         hostPath:
           path: /var/run/docker.sock
           type: Socket
+      - name: containerdsock
+        hostPath:
+          path: /run/containerd/containerd.sock
+          type: Socket
       #- name: gorilychrume
       #  hostPath:
       #    path: /data/gorilych.ru/me
@@ -47,6 +51,8 @@ spec:
           name: home
         - mountPath: /var/run/docker.sock
           name: dockersock
+        - mountPath: /run/containerd/containerd.sock
+          name: containerdsock
         #- mountPath: /home/www/me
         #  name: gorilychrume
 ---
