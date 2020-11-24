@@ -25,17 +25,13 @@ spec:
         hostPath:
           path: /var/run/docker.sock
           type: Socket
-      - name: containerdsock
-        hostPath:
-          path: /run/containerd/containerd.sock
-          type: Socket
       #- name: gorilychrume
       #  hostPath:
       #    path: /data/gorilych.ru/me
       #    type:
       containers:
       - name: sshct
-        image: gorilych/sshct:v2.4.0
+        image: gorilych/sshct:v3.0.0
         imagePullPolicy: IfNotPresent
         env:
         - name: CTUSERPWD
@@ -51,8 +47,6 @@ spec:
           name: home
         - mountPath: /var/run/docker.sock
           name: dockersock
-        - mountPath: /run/containerd/containerd.sock
-          name: containerdsock
         #- mountPath: /home/www/me
         #  name: gorilychrume
 ---
