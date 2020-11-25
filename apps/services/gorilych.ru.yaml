@@ -18,7 +18,7 @@ spec:
       volumes:
       - name: gorilychru
         hostPath:
-          path: /data/home/www/gorilych.ru
+          path: /home/www/gorilych.ru
           type: Directory
       #- name: nginxdefaultconf
       #  hostPath:
