@@ -19,7 +19,7 @@ spec:
       volumes:
       - name: jupyter
         hostPath:
-          path: /data/home/jupyter
+          path: /home/jupyter
           type: DirectoryOrCreate
       containers:
       - name: jupyter
