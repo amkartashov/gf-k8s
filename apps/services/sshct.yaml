@@ -57,6 +57,7 @@ metadata:
 spec:
   selector:
     app: sshct
+  externalTrafficPolicy: Local
   ports:
   - name: ssh
     protocol: TCP
