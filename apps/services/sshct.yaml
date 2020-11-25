@@ -19,7 +19,7 @@ spec:
       volumes:
       - name: home
         hostPath:
-          path: /data/home
+          path: /home
           type: DirectoryOrCreate
       - name: dockersock
         hostPath:
