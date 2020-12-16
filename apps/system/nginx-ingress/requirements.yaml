@@ -1,4 +1,0 @@
-dependencies:
-- name: nginx-ingress
-  version: 1.24.4
-  repository: '@stable'
