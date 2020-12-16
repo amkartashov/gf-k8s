@@ -1,5 +1,5 @@
 # https://argoproj.github.io/argo-cd/operator-manual/ingress/#ssl-passthrough-with-cert-manager-and-lets-encrypt
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: argocd-server-ingress
@@ -13,9 +13,13 @@ spec:
   rules:
   - http:
       paths:
-      - backend:
-          serviceName: argocd-server
-          servicePort: https
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: argocd-server
+            port:
+              name: https
     host: argocd.gorilych.ru
   tls:
   - hosts:
