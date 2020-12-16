@@ -1,15 +1,9 @@
-
-create namespaces
-
-```
-$ kubectl --context=gullfaxi apply main/templates/namespace-*.yaml
-```
-
-install nginx-ingress
+install ingress-nginx
 
 ```
-$ helm dep update apps/system/nginx-ingress
-$ helm template --name nginx-ingress --namespace nginx-ingress apps/system/nginx-ingress | kubectl --context=gullfaxi --namespace nginx-ingress apply -f -
+$ helm dep update apps/system/ingress-nginx
+$ kubectl --context=gullfaxi create namespace ingress-nginx
+$ helm template ingress-nginx --namespace ingress-nginx apps/system/ingress-nginx | kubectl --context=gullfaxi --namespace ingress-nginx apply -f -
 ```
 
 install cert-manager with cluster issuer
@@ -17,7 +11,10 @@ install cert-manager with cluster issuer
 ```
 $ helm repo add jetstack https://charts.jetstack.io
 $ helm dep update apps/system/cert-manager
-$ helm template --name cert-manager --namespace cert-manager apps/system/cert-manager | kubectl --context=gullfaxi --namespace cert-manager apply -f -
+$ kubectl --context=gullfaxi create namespace cert-manager
+$ kubectl --context=gullfaxi label namespace cert-manager certmanager.k8s.io/disable-validation="true"
+$ kubectl --context=gullfaxi apply --validate=false -f apps/system/cert-manager/templates/cert-manager.crds.yaml
+$ helm template cert-manager --namespace cert-manager apps/system/cert-manager | kubectl --context=gullfaxi apply -f -
 ```
 
 install argocd
@@ -38,7 +35,7 @@ add argocd public key as deploy key to gf-k8s repo
 log into argocd
 
 ```
-$ argocd login argocd-grpc.gorilych.ru 
+$ argocd login --grpc-web argocd.gorilych.ru
 ```
 
 create main app
