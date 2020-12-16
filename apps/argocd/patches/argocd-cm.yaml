@@ -14,6 +14,9 @@ data:
         clientID: $dex.github.clientId
         clientSecret: $dex.github.clientSecret
   repositories: |
+    - name: grafana
+      type: helm
+      url: https://grafana.github.io/helm-charts
     - name: ingress-nginx
       type: helm
       url: https://kubernetes.github.io/ingress-nginx
