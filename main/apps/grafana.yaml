@@ -12,6 +12,8 @@ spec:
     path: apps/system/grafana
     repoURL: git@github.com:gorilych/gf-k8s
   syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
     automated:
       prune: true
       selfHeal: true
