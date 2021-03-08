@@ -13,6 +13,28 @@ data:
       config:
         clientID: $dex.github.clientId
         clientSecret: $dex.github.clientSecret
+  configManagementPlugins: |
+    - name: cue
+      init:
+        command: ["python3"]
+        args:
+          - -c
+          - |
+            try:
+                f = open('/tmp/cue')
+                print('cue is installed already')
+            except IOError:
+                print('installing cue ...')
+                import urllib.request
+                url = 'https://github.com/cuelang/cue/releases/download/v0.3.0-beta.5/cue_0.3.0-beta.5_Linux_x86_64.tar.gz'
+                urllib.request.urlretrieve(url, '/tmp/cue.tar.gz')
+                import tarfile
+                a = tarfile.open('/tmp/cue.tar.gz')
+                a.extract('cue', '/tmp/')
+                print('               ... done')
+      generate:
+        command: ["/tmp/cue"]
+        args: ["cmd", "dump", "./..."]
   repositories: |
     - name: grafana
       type: helm
