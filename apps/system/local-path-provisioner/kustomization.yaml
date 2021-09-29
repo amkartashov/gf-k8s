@@ -1,0 +1,9 @@
+# based on https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.20/deploy/kustomization.yaml
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  # downloaded from https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.20/deploy/local-path-storage.yaml
+  - local-path-storage.yaml
+patches:
+  - config.yaml

@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: local-path-provisioner
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: local-path-provisioner
+    server: https://kubernetes.default.svc 
+  project: default
+  source:
+    path: apps/system/local-path-provisioner
+    repoURL: git@github.com:gorilych/gf-k8s
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
