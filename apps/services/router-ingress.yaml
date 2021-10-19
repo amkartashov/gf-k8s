@@ -18,7 +18,7 @@ subsets:
     ports:
       - port: 443
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-rules
@@ -33,6 +33,9 @@ spec:
     - host: router.gorilych.ru
       http:
         paths:
-        - backend:
-            serviceName: router-svc
-            servicePort: 443
+        - pathType: ImplementationSpecific
+          backend:
+            service:
+              name: router-svc
+              port:
+                number: 443
