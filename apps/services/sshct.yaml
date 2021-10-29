@@ -29,7 +29,7 @@ spec:
         hostPath:
           path: /usr/bin/perf
           type: File
-      - name: host-perf-5.10
+      - name: host-perf-5-10
         hostPath:
           path: /usr/bin/perf_5.10
           type: File
@@ -67,7 +67,7 @@ spec:
           name: host-perf
           readOnly: true
         - mountPath: /usr/bin/perf_5.10
-          name: host-perf-5.10
+          name: host-perf-5-10
           readOnly: true
         - mountPath: /lib/modules
           name: host-lib-modules
