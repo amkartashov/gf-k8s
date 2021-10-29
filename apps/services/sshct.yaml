@@ -25,13 +25,29 @@ spec:
         hostPath:
           path: /var/run/docker.sock
           type: Socket
+      - name: host-perf
+        hostPath:
+          path: /usr/bin/perf
+          type: File
+      - name: host-perf-5.10
+        hostPath:
+          path: /usr/bin/perf_5.10
+          type: File
+      - name: host-lib-modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: host-kernel-debug
+        hostPath:
+          path: /sys/kernel/debug
+          type: Directory
       #- name: gorilychrume
       #  hostPath:
       #    path: /data/gorilych.ru/me
       #    type:
       containers:
       - name: sshct
-        image: gorilych/sshct:v3.4.0
+        image: gorilych/sshct:v3.5.0
         imagePullPolicy: IfNotPresent
         env:
         - name: CTUSERPWD
@@ -47,6 +63,17 @@ spec:
           name: home
         - mountPath: /var/run/docker.sock
           name: dockersock
+        - mountPath: /usr/bin/perf
+          name: host-perf
+          readOnly: true
+        - mountPath: /usr/bin/perf_5.10
+          name: host-perf-5.10
+          readOnly: true
+        - mountPath: /lib/modules
+          name: host-lib-modules
+          readOnly: true
+        - mountPath: /sys/kernel/debug
+          name: host-kernel-debug
         #- mountPath: /home/www/me
         #  name: gorilychrume
 ---
