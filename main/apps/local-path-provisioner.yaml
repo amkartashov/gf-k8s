@@ -7,15 +7,13 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: local-path-provisioner
+    namespace: local-path-storage
     server: https://kubernetes.default.svc 
   project: default
   source:
     path: apps/system/local-path-provisioner
     repoURL: git@github.com:amkartashov/gf-k8s
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
     automated:
       prune: true
       selfHeal: true
