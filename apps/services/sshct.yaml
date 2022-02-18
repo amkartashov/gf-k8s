@@ -27,7 +27,7 @@ spec:
           type: Socket
       containers:
       - name: sshct
-        image: gorilych/sshct:v3.6.0
+        image: ghcr.io/amkartashov/sshct:v3.7.1
         imagePullPolicy: IfNotPresent
         env:
         - name: CTUSERPWD
