@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: timemachine
   namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: timemachine
