@@ -11,11 +11,4 @@ spec:
   commonName: gorilych.ru
   dnsNames:
   - gorilych.ru
-  - confluence.gorilych.ru
-  - git.gorilych.ru
-  - jira.gorilych.ru
-  - jupyter.gorilych.ru
   - router.gorilych.ru
-  - seafile.gorilych.ru
-  - grafana.gorilych.ru
-  - wiki.gorilych.ru
