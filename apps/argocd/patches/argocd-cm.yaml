@@ -48,3 +48,9 @@ data:
     - name: itzg
       type: helm
       url: https://itzg.github.io/minecraft-server-charts/
+    - name: prometheus-community
+      type: helm
+      url: https://prometheus-community.github.io/helm-charts
+    - name: vm
+      type: helm
+      url: https://victoriametrics.github.io/helm-charts/

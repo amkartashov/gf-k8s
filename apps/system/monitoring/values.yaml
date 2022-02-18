@@ -1,61 +1,51 @@
-prometheus-operator:
-  nameOverride: prometheus-operator
-  fullnameOverride: prometheus-operator
-  prometheusOperator:
-    admissionWebhooks:
-      enabled: false
-    tlsProxy:
-      enabled: false
-    serviceMonitor:
-      selfMonitor: false
-  prometheus:
-    enabled: true
-    serviceMonitor:
-      selfMonitor: false
-    prometheusSpec:
-      replicas: 1
-      securityContext:
-        runAsUser: 1000
-      walCompression: true
-      serviceMonitorSelector: {}
-      serviceMonitorNamespaceSelector: {}
+victoria-metrics-k8s-stack:
+  nameOverride: monitoring
+  fullnameOverride: monitoring
+  argocdReleaseOverride: monitoring
+
+  vmsingle:
+    spec:
       storage:
-        volumeClaimTemplate:
-          spec:
-            volumeName: prometheus
-            resources:
-              requests:
-                storage: 10Gi
-  alertmanager:
-    enabled: false
-  defaultRules:
-    create: false
-  kubelet:
-    enabled: true
-  kubeControllerManager:
-    enabled: false
-  kubeScheduler:
-    enabled: false
-  kubeEtcd:
-    enabled: false
-  coreDns:
-    enabled: false
-  kubeDns:
-    enabled: false
-  kubeApiServer:
-    enabled: false
-  kubeProxy:
-    enabled: false
-  kubeStateMetrics:
-    enabled: true
-  nodeExporter:
-    enabled: true
+        storageClassName: local-path
+
   grafana:
-    enabled: false
-# because of https://github.com/helm/helm/issues/4490
-kubeStateMetrics:
-  enabled: true
-nodeExporter:
-  enabled: true
-grafana:
-  enabled: false
+    # secret grafana should be created manually
+    # it should contain:
+    #   admin-user
+    #   admin-password
+    #   GF_AUTH_GITHUB_CLIENT_SECRET
+    admin:
+      existingSecret: grafana
+    envFromSecret: grafana
+    additionalDataSources:
+      - name: loki
+        type: loki
+        access: proxy
+        url: http://loki.logging:3100
+        version: 1
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+      hosts:
+        - grafana.gorilych.ru
+      tls:
+        - secretName: grafana-ingress-tls
+          hosts:
+            - grafana.gorilych.ru
+    persistence:
+      enabled: true
+      storageClassName: local-path
+    grafana.ini:
+      server:
+        root_url: https://grafana.gorilych.ru
+      auth.github:
+        enabled: true
+        allow_sign_up: false
+        client_id: 6494b9ed39a915d9ac20
+        # client_secret: in grafana secret
+        scopes: user:email,read:org
+        auth_url: https://github.com/login/oauth/authorize
+        token_url: https://github.com/login/oauth/access_token
+        api_url: https://api.github.com/user

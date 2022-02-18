@@ -1,2 +1,6 @@
 name: monitoring
 version: 0.1
+dependencies:
+- name: victoria-metrics-k8s-stack
+  version: 0.7.3
+  repository: https://victoriametrics.github.io/helm-charts/
