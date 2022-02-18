@@ -48,8 +48,3 @@ data:
     - name: itzg
       type: helm
       url: https://itzg.github.io/minecraft-server-charts/
-  repository.credentials: |
-    - url: git@github.com:gorilych/
-      sshPrivateKeySecret:
-        name: argocd-secret
-        key: gitPrivateKey

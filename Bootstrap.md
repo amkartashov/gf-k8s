@@ -24,7 +24,6 @@ $ kubectl --context=gullfaxi apply -k apps/argocd
 ```
 
 add dex.github.clientId and dex.github.clientSecret into argo-secret
-add gitPrivateKey
 
 ```
 $ kubectl --context=gullfaxi -n argocd edit secret argocd-secret
@@ -38,13 +37,19 @@ log into argocd
 $ argocd login --grpc-web argocd.gorilych.ru
 ```
 
+add repo
+
+```
+argocd --grpc-web repo add git@github.com:amkartashov/gf-k8s --ssh-private-key-path ~/argocd-key
+```
+
 create main app
 
 ```
-$ argocd app create main \
+$ argocd --grpc-web app create main \
     --dest-namespace argocd \
     --dest-server https://kubernetes.default.svc \
-    --repo git@github.com:gorilych/gf-k8s.git \
+    --repo git@github.com:amkartashov/gf-k8s \
     --path main \
     --directory-recurse \
     --sync-policy automated \

@@ -12,4 +12,4 @@ spec:
   project: default
   source:
     path: apps/services
-    repoURL: git@github.com:gorilych/gf-k8s
+    repoURL: git@github.com:amkartashov/gf-k8s
