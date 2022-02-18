@@ -5,6 +5,7 @@ victoria-metrics-k8s-stack:
 
   vmsingle:
     spec:
+      removePvcAfterDelete: true
       storage:
         storageClassName: local-path
 
