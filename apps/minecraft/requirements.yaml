@@ -1,4 +1,0 @@
-dependencies:
-- name: minecraft
-  version: 2.0.7
-  repository: 'https://itzg.github.io/minecraft-server-charts/'
