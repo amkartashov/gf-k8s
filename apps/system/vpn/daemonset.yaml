@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: vpn-client
+  labels:
+    k8s-app: vpn-client
+spec:
+  selector:
+    matchLabels:
+      name: vpn-client
+  template:
+    metadata:
+      labels:
+        name: vpn-client
+    spec:
+      hostNetwork: true
+      volumes:
+        - name: vpn-conf
+          configMap:
+            name: vpn-conf
+        - name: vpn-creds
+          secret:
+            secretName: vpn-creds
+        - name: dev-net-tun
+          hostPath:
+            path: /dev/net/tun
+      containers:
+        - name: openvpn
+          image: ghcr.io/amkartashov/openvpn:0.1.0
+          command: ["/usr/sbin/openvpn"]
+          args:
+            - --config
+            - /vpn/vpn.conf
+            - --auth-user-pass
+            - /vpn/creds
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - NET_ADMIN
+          volumeMounts:
+            - name: vpn-conf
+              mountPath: /vpn/vpn.conf
+              subPath: vpn.conf
+              readOnly: true
+            - name: vpn-creds
+              mountPath: /vpn/creds
+              subPath: creds
+              readOnly: true
+            - mountPath: /dev/net/tun
+              name: dev-net-tun

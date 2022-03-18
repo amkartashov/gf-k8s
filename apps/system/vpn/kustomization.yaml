@@ -1,0 +1,9 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - daemonset.yaml
+configMapGenerator:
+  - name: vpn-conf
+    files:
+      - vpn.conf=Fastestvpn_ovpn/UDP_Files/Sweden2-UDP.ovpn
