@@ -20,3 +20,15 @@ $ kubectl --context=gullfaxi --namespace vpn \
     create secret generic vpn-creds \
     --from-file=creds=./creds
 ```
+
+To disable:
+
+```bash
+kubectl --context=gullfaxi label nodes gullfaxi vpn-
+```
+
+To enable:
+
+```bash
+kubectl --context=gullfaxi label nodes gullfaxi vpn=""
+```
