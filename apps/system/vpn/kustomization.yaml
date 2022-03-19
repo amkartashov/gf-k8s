@@ -7,3 +7,7 @@ configMapGenerator:
   - name: vpn-conf
     files:
       - vpn.conf=Fastestvpn_ovpn/UDP_Files/Sweden2-UDP.ovpn
+  - name: vpn-scripts
+    files:
+      - up.sh=scripts/up.sh
+      - down.sh=scripts/down.sh

@@ -26,6 +26,10 @@ spec:
         - name: vpn-conf
           configMap:
             name: vpn-conf
+        - name: vpn-scripts
+          configMap:
+            name: vpn-scripts
+            defaultMode: 0555
         - name: vpn-creds
           secret:
             secretName: vpn-creds
@@ -41,6 +45,12 @@ spec:
             - /vpn/vpn.conf
             - --auth-user-pass
             - /vpn/creds
+            - --script-security
+            - "2"
+            - --up
+            - /vpn-scripts/up.sh
+            - --down
+            - /vpn-scripts/down.sh
           securityContext:
             privileged: true
             capabilities:
@@ -54,6 +64,9 @@ spec:
             - name: vpn-creds
               mountPath: /vpn/creds
               subPath: creds
+              readOnly: true
+            - name: vpn-scripts
+              mountPath: /vpn-scripts
               readOnly: true
             - mountPath: /dev/net/tun
               name: dev-net-tun
