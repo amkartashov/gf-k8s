@@ -21,7 +21,7 @@ spec:
             - matchExpressions:
               - key: vpn
                 operator: In
-                values: ["enabled"]
+                values: ["disabled"]
       volumes:
         - name: vpn-conf
           configMap:
