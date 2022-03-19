@@ -20,7 +20,8 @@ spec:
             nodeSelectorTerms:
             - matchExpressions:
               - key: vpn
-                operator: Exists
+                operator: In
+                values: ["enabled"]
       volumes:
         - name: vpn-conf
           configMap:
