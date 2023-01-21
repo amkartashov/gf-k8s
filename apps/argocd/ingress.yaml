@@ -20,8 +20,8 @@ spec:
             name: argocd-server
             port:
               name: https
-    host: argocd.gorilych.ru
+    host: argocd.ioot.xyz
   tls:
   - hosts:
-    - argocd.gorilych.ru
+    - argocd.ioot.xyz
     secretName: argocd-secret

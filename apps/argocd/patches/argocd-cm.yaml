@@ -4,7 +4,7 @@ metadata:
   name: argocd-cm
 data:
   application.instanceLabelKey: argocd.argoproj.io/instance
-  url: https://argocd.gorilych.ru
+  url: https://argocd.ioot.xyz
   statusbadge.enabled: 'true'
   dex.config: |
     connectors:
