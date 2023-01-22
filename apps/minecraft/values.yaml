@@ -4,10 +4,12 @@ minecraft:
     pvp: true
     onlineMode: false
     serviceType: NodePort
+    nodePort: 32565
     rcon:
       enabled: true
       password: "CHANGE_IN_ARGOCD"
       serviceType: NodePort
+      nodePort: 32575
   persistence:
     dataDir:
       enabled: true
