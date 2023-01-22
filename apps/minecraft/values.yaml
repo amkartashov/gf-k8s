@@ -1,7 +1,12 @@
 minecraft:
+  # https://github.com/itzg/minecraft-server-charts/blob/master/charts/minecraft/values.yaml
   minecraftServer:
     eula: "TRUE"
     pvp: true
+    gameMode: creative
+    motd: Welcome to IOOT.XYZ
+    whitelist: CHANGE
+    ops: CHANGE
     onlineMode: false
     serviceType: NodePort
     nodePort: 32565
