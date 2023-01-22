@@ -2,6 +2,7 @@ minecraft:
   # https://github.com/itzg/minecraft-server-charts/blob/master/charts/minecraft/values.yaml
   minecraftServer:
     eula: "TRUE"
+    type: FORGE
     pvp: true
     gameMode: creative
     motd: Welcome to IOOT.XYZ
