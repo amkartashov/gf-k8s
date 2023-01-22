@@ -1,0 +1,14 @@
+minecraft:
+  minecraftServer:
+    eula: "TRUE"
+    pvp: true
+    onlineMode: false
+    serviceType: NodePort
+    rcon:
+      enabled: true
+      password: "CHANGE_IN_ARGOCD"
+      serviceType: NodePort
+  persistence:
+    dataDir:
+      enabled: true
+      existingClaim: minecraft
