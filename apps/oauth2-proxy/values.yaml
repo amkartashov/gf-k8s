@@ -4,12 +4,24 @@ oauth2-proxy:
     clientSecret: change_in_argocd
     cookieSecret: change_in_argocd
     configFile: |-
+      # https://github.com/kubernetes/ingress-nginx/issues/2831#issuecomment-407336056
       provider = "github"
       email_domains = [ "*" ]
       upstreams = [ "file:///dev/null" ]
       github_users = "amkartashov"
       proxy_prefix = "/"
       whitelist_domains = ".ioot.xyz"
+      cookie_refresh = "1h"
+      cookie_expire = "168h0m"
+      cookie_secure = "true"
+      cookie_domains = ".ioot.xyz"
+      ssl_insecure_skip_verify = "true"
+      pass_basic_auth = "false"
+      pass_access_token = "true"
+      pass_user_headers = "true"
+      set_authorization_header = "true"
+      pass_authorization_header = "true"
+
   ingress:
     enabled: true
     annotations:
