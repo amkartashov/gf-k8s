@@ -9,6 +9,7 @@ oauth2-proxy:
       upstreams = [ "file:///dev/null" ]
       github_users = "amkartashov"
       proxy_prefix = "/"
+      whitelist_domains = ".ioot.xyz"
   ingress:
     enabled: true
     annotations:
