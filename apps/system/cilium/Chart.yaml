@@ -1,0 +1,7 @@
+name: cilium
+version: 0.0.1
+apiVersion: v2
+dependencies:
+- name: cilium
+  version: "1.12.6"
+  repository: https://helm.cilium.io/

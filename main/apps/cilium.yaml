@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cilium
+  namespace: argocd
+spec:
+  destination:
+    namespace: kube-system
+    server: https://kubernetes.default.svc 
+  project: default
+  source:
+    path: apps/system/cilium
+    repoURL: git@github.com:amkartashov/gf-k8s
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
