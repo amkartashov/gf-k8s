@@ -18,8 +18,7 @@ cilium:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt
           nginx.ingress.kubernetes.io/auth-url: "https://oauth2.ioot.xyz/oauth2/auth"
-          nginx.ingress.kubernetes.io/auth-signin: "https://oauth2.ioot.xyz/oauth2/start?rd=$escaped_request_uri"
-          nginx.ingress.kubernetes.io/auth-response-headers: "x-auth-request-user, x-auth-request-email, x-auth-request-access-token"
+          nginx.ingress.kubernetes.io/auth-signin: "https://oauth2.ioot.xyz/oauth2/start?rd=$scheme://$host$request_uri"
         hosts:
           - hubble.ioot.xyz
         tls:
