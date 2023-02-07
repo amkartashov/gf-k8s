@@ -9,7 +9,6 @@ oauth2-proxy:
       email_domains = [ "*" ]
       upstreams = [ "file:///dev/null" ]
       github_users = "amkartashov"
-      proxy_prefix = "/"
       whitelist_domains = ".ioot.xyz"
       cookie_refresh = "1m"
       cookie_expire = "30m"
