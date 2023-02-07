@@ -1,0 +1,23 @@
+oauth2-proxy:
+  config:
+    clientID: 13240a7012a34dbdd9c7
+    clientSecret: change_in_argocd
+    cookieSecret: change_in_argocd
+    configFile: |-
+      provider = "github"
+      email_domains = [ "*" ]
+      upstreams = [ "file:///dev/null" ]
+      github_users = "amkartashov"
+      proxy_prefix = "/"
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+      cert-manager.io/cluster-issuer: letsencrypt
+    hosts:
+      - oauth2.ioot.xyz
+    tls:
+      - hosts:
+          - oauth2.ioot.xyz
+        secretName: oauth2-tls
