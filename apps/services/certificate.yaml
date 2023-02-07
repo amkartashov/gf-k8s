@@ -8,7 +8,9 @@ spec:
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer
-  commonName: gorilych.ru
+  commonName: ioot.xyz
   dnsNames:
   - gorilych.ru
   - router.gorilych.ru
+  - ioot.xyz
+  - router.ioot.xyz
