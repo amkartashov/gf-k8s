@@ -11,8 +11,8 @@ oauth2-proxy:
       github_users = "amkartashov"
       proxy_prefix = "/"
       whitelist_domains = ".ioot.xyz"
-      cookie_refresh = "1h"
-      cookie_expire = "168h0m"
+      cookie_refresh = "1m"
+      cookie_expire = "30m"
       cookie_secure = "true"
       cookie_domains = ".ioot.xyz"
       ssl_insecure_skip_verify = "true"
@@ -21,6 +21,7 @@ oauth2-proxy:
       pass_user_headers = "true"
       set_authorization_header = "true"
       pass_authorization_header = "true"
+      set_xauthrequest = true
 
   ingress:
     enabled: true
