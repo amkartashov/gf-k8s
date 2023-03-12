@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: telepresence
+  namespace: argocd
+spec:
+  destination:
+    namespace: ambassador
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: telepresence
+    repoURL: https://app.getambassador.io
+    targetRevision: "2.11.1"
+    helm:
+      releaseName: traffic-manager
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

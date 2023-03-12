@@ -6,6 +6,9 @@ data:
   application.instanceLabelKey: argocd.argoproj.io/instance
   url: https://argocd.ioot.xyz
   statusbadge.enabled: 'true'
+  resource.compareoptions: |
+    # disables status field diffing in specified resource types
+    ignoreAggregatedRoles: true
   dex.config: |
     connectors:
     - type: github
