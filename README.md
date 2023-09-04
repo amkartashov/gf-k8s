@@ -57,3 +57,16 @@ Used methods:
 * `default`: for app-of-apps
 * `system`: for cluster system apps, like monitoring + argocd itself
 * `apps`: for user level applications
+
+## ArgoCD application types which can be used
+
+### ArgoCD Directory Application
+
+### ArgoCD Helm Applications
+
+#### ArgoCD Helm Application with Embedded Values
+
+#### ArgoCD Helm Application with Values from Git
+
+#### ArgoCD Helm Application with Additional Manifests from Git
+
