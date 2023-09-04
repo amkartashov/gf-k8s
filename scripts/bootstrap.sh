@@ -25,7 +25,7 @@ function main() {
 
     # apply manifests for crucial applications
     for app_file in \
-        ${state_path}/system/argo-cd-application.yaml \
+        ${state_path}/system/argo-cd.yaml \
         ; do
         namespace=$(yq -e '.spec.destination.namespace' ${app_file})
         ${kubectl_cmd} create ns ${namespace} || true
@@ -33,10 +33,8 @@ function main() {
     done
 
     ${kubectl_cmd} apply -n argocd -R \
-        -f ${state_path}/apps-application.yaml \
-        -f ${state_path}/apps-project.yaml \
-        -f ${state_path}/system-application.yaml \
-        -f ${state_path}/system-project.yaml
+        -f ${state_path}/apps.yaml \
+        -f ${state_path}/system.yaml
 
     # wait for argocd to create argocd-initial-admin-secret
     ${kubectl_cmd} -n argocd wait --timeout=300s \
