@@ -19,7 +19,6 @@ spec:
       chart: argo-cd
       targetRevision: 5.45.0
       helm:
-        releaseName: argocd
         valueFiles:
           - $values/state/gullfaxi/system/argocd-values.yaml
     - repoURL: git@github.com:amkartashov/gf-k8s.git
