@@ -35,7 +35,9 @@ spec:
     path: state/gullfaxi/system/
     targetRevision: main
     directory:
+      # https://argo-cd.readthedocs.io/en/stable/user-guide/directory/
       recurse: false
+      exclude: '{*-values.yaml}'
   syncPolicy:
     automated:
       prune: true

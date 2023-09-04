@@ -14,42 +14,14 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-  source:
-    repoURL: https://argoproj.github.io/argo-helm
-    chart: argo-cd
-    targetRevision: 5.45.0
-    helm:
-      releaseName: argocd
-      values: |
-        configs:
-          cm:
-            url: https://argocd.ioot.xyz
-            exec.enabled: true
-            statusbadge.enabled: "true"
-            dex.config: |
-              connectors:
-              - type: github
-                id: github
-                name: GitHub
-                config:
-                  clientID: $dex.github.clientId
-                  clientSecret: $dex.github.clientSecret
-          rbac:
-            policy.csv: |
-              # sub for amkartashov github account with id 7404372
-              g, Cgc3NDA0MzcyEgZnaXRodWI, role:admin
-        server:
-          # https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#ssl-passthrough-with-cert-manager-and-lets-encrypt
-          ingress:
-            enabled: true
-            ingressClassName: nginx
-            annotations:
-              cert-manager.io/cluster-issuer: letsencrypt
-              nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-              nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-            hosts:
-              - argocd.ioot.xyz
-            tls:
-              - hosts:
-                  - argocd.ioot.xyz
-                secretName: argocd-server-tls
+  # https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository
+  sources:
+    - repoURL: git@github.com:amkartashov/gf-k8s.git
+      targetRevision: main
+      ref: values
+    - repoURL: https://argoproj.github.io/argo-helm
+      chart: argo-cd
+      targetRevision: 5.45.0
+      helm:
+        valueFiles:
+          - $values/state/gullfaxi/system/argo-cd-values.yaml
