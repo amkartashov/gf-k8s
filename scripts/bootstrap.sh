@@ -85,7 +85,7 @@ function helm_render_from_source() {
     || release=$(yq -e '.metadata.name' ${app_file})
     local namespace=$(yq -e '.spec.destination.namespace' ${app_file})
     local values_arg=""
-    if yq -e '.spec.source.helm | has("values")' ${app_file}; then
+    if yq -e '.spec.source.helm | has("values")' ${app_file} >/dev/null; then
       local values_file=$(mktemp /tmp/${release}_${chart}_${chart_version}.yaml.XXXX)
       values_arg="--values ${values_file}"
       yq '.spec.source.helm.values // ""' ${app_file} > ${values_file}
@@ -111,6 +111,10 @@ function helm_render_from_sources() {
     local values_arg=""
     if [ -f ${values_file} ]; then
       values_arg="--values ${values_file}"
+    elif yq -e '.spec.sources[0].helm | has("values")' ${app_file} >/dev/null; then
+      local values_file=$(mktemp /tmp/${release}_${chart}_${chart_version}.yaml.XXXX)
+      values_arg="--values ${values_file}"
+      yq '.spec.sources[0].helm.values // ""' ${app_file} > ${values_file}
     fi
 
     helm template ${release} ${chart} \
