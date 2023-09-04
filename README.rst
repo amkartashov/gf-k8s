@@ -97,6 +97,19 @@ ArgoCD bootstrap
 
 * Create new Oauth application <https://github.com/settings/applications/new>:
 
+  * Application name: oauth2.ioot.xyz
+  * Homepage URL: https://oauth2.ioot.xyz
+  * Authorization callback URL: https://oauth2.ioot.xyz/oauth2/callback
+  * Update oauth2-proxy client id, secret and cookie secret:
+
+    .. code-block:: bash
+
+      argocd app set argocd/oauth2-proxy --parameter config.clientID REPLACE
+      argocd app set argocd/oauth2-proxy --parameter config.clientSecret REPLACE
+      argocd app set argocd/oauth2-proxy --parameter config.cookieSecret `pwgen -1 32`
+
+* Create new Oauth application <https://github.com/settings/applications/new>:
+
   * Application name: argocd.ioot.xyz
   * Homepage URL: https://argocd.ioot.xyz/
   * Authorization callback URL: https://argocd.ioot.xyz/api/dex/callback
@@ -117,9 +130,17 @@ Passing Sensitive Parameters in ArgoCD apps
 
 Used methods:
 
-* manually creating K8s secrets (f.e. this way is used to configure repo secret in argocd)
-* manually updating K8s secrets (f.e. this way is used to configure GitHub Oauth App client secret)
+* manually creating K8s secrets
+
+  F.e. this way is used to configure repo secret in argocd.
+
+* manually updating K8s secrets
+
+  F.e. this way is used to configure GitHub Oauth App client secret.
+
 * modifying helm parameters in application
+
+  F.e. this is done for Oauth2 Proxy application.
 
 ArgoCD application types which can be used
 ===============================================================================
