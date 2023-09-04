@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sshct
+  labels:
+    app: sshct
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sshct
+  template:
+    metadata:
+      labels:
+        app: sshct
+    spec:
+      hostNetwork: true
+      volumes:
+      - name: home
+        hostPath:
+          path: /home
+          type: DirectoryOrCreate
+      - name: dockersock
+        hostPath:
+          path: /var/run/docker.sock
+          type: Socket
+      containers:
+      - name: sshct
+        securityContext:
+          privileged: true
+        image: ghcr.io/amkartashov/sshct:v3.8.0
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: CT_SSH_PORT
+          value: "30810"
+        #- name: CTUSERPWD
+        #  valueFrom:
+        #    secretKeyRef:
+        #      name: sshct
+        #      key: password
+        volumeMounts:
+        - mountPath: /home
+          name: home
+        - mountPath: /var/run/docker.sock
+          name: dockersock
