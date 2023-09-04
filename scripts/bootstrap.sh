@@ -77,6 +77,9 @@ function helm_render_from_source() {
     local chart=$(yq -e '.spec.source.chart' ${app_file})
     local chart_version=$(yq -e '.spec.source.targetRevision' ${app_file})
     local release=$(yq -e '.spec.source.helm.releaseName' ${app_file})
+    local release
+    release=$(yq -e '.spec.source.helm.releaseName' ${app_file}) \
+    || release=$(yq -e '.metadata.name' ${app_file})
     local namespace=$(yq -e '.spec.destination.namespace' ${app_file})
     local values_file=$(mktemp /tmp/${release}_${chart}_${chart_version}.yaml.XXXX)
     yq '.spec.source.helm.values // ""' ${app_file} > ${values_file}
@@ -92,7 +95,9 @@ function helm_render_from_sources() {
     local repo=$(yq -e '.spec.sources[0].repoURL' ${app_file})
     local chart=$(yq -e '.spec.sources[0].chart' ${app_file})
     local chart_version=$(yq -e '.spec.sources[0].targetRevision' ${app_file})
-    local release=$(yq -e '.spec.sources[0].helm.releaseName' ${app_file})
+    local release
+    release=$(yq -e '.spec.sources[0].helm.releaseName' ${app_file}) \
+    || release=$(yq -e '.metadata.name' ${app_file})
     local namespace=$(yq -e '.spec.destination.namespace' ${app_file})
     local values_file=${app_file%.yaml}-values.yaml
 
