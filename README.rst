@@ -30,16 +30,18 @@ Applications & Projects
 +------------------------------+----------------------------------------------------------------+-------------------------+
 | `Apps Project`_, **user level applications**                                                                            |
 +------------------------------+----------------------------------------------------------------+-------------------------+
+| Oauth2-proxy_                | `Oauth2 Proxy`_                                                | |oauth2-proxy_status|   |
++------------------------------+----------------------------------------------------------------+-------------------------+
 
 .. _`Default Project`: https://argocd.ioot.xyz/applications?proj=default
-.. _`System Project`: https://argocd.ioot.xyz/applications?proj=system
-.. _`Apps Project`: https://argocd.ioot.xyz/applications?proj=apps
 
 .. _System: https://argocd.ioot.xyz/applications/argocd/system
 .. |system_status| image:: https://argocd.ioot.xyz/api/badge?name=system&revision=true
 
 .. _Apps: https://argocd.ioot.xyz/applications/argocd/apps
 .. |apps_status| image:: https://argocd.ioot.xyz/api/badge?name=apps&revision=true
+
+.. _`System Project`: https://argocd.ioot.xyz/applications?proj=system
 
 .. _ArgoCD: https://argocd.ioot.xyz/applications/argocd/argocd
 .. _GitOps tool for Kubernetes: https://argo-cd.readthedocs.io
@@ -61,6 +63,11 @@ Applications & Projects
 .. _Rancher Local-Path: https://github.com/rancher/local-path-provisioner
 .. |local-path_status| image:: https://argocd.ioot.xyz/api/badge?name=local-path-provisioner&revision=true
 
+.. _`Apps Project`: https://argocd.ioot.xyz/applications?proj=apps
+
+.. _Oauth2-proxy: https://argocd.ioot.xyz/applications/argocd/oauth2-proxy
+.. _Oauth2 Proxy: https://github.com/oauth2-proxy/oauth2-proxy
+.. |oauth2-proxy_status| image:: https://argocd.ioot.xyz/api/badge?name=oauth2-proxy&revision=true
 
 Cluster initialization
 ===============================================================================
