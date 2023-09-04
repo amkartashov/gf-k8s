@@ -13,10 +13,13 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-  source:
-    repoURL: https://charts.jetstack.io
-    chart: cert-manager
-    targetRevision: 1.12.4
-    helm:
-      values: |
-        # nothing
+  sources:
+    - repoURL: https://charts.jetstack.io
+      chart: cert-manager
+      targetRevision: 1.12.4
+      helm:
+        values: |
+          installCRDs: true
+    - repoURL: git@github.com:amkartashov/gf-k8s.git
+      targetRevision: main
+      path: state/gullfaxi/system/cert-manager/manifests/

@@ -24,13 +24,15 @@ function main() {
     local state_path="$(git rev-parse --show-toplevel)/state/${env_name}"
 
     # apply manifests for crucial applications
-    for app_file in \
-        ${state_path}/system/argocd.yaml \
+    for app in \
+        argocd \
         ; do
+        app_dir=${state_path}/system/${app}
+        app_file=${state_path}/system/${app}/application.yaml
         namespace=$(yq -e '.spec.destination.namespace' ${app_file})
 
         ${kubectl_cmd} create ns ${namespace} || true
-        helm_render ${app_file} | ${kubectl_cmd} -n ${namespace} apply -f -
+        helm_render ${app_dir} | ${kubectl_cmd} -n ${namespace} apply -f -
     done
 
     ${kubectl_cmd} apply -n argocd -R \
@@ -61,10 +63,10 @@ function help() {
 }
 
 function helm_render() {
-    local app_file=$1
-    local values_file=${app_file%.yaml}-values.yaml
+    local app_dir=$1
+    local app_file=${app_dir}/application.yaml
 
-    if [ -f ${values_file} ]; then
+    if yq -e '.spec | has("sources")' ${app_file} >/dev/null; then
       helm_render_from_sources "$@"
     else
       helm_render_from_source "$@"
@@ -72,7 +74,8 @@ function helm_render() {
 }
 
 function helm_render_from_source() {
-    local app_file=$1
+    local app_dir=$1
+    local app_file=${app_dir}/application.yaml
     local repo=$(yq -e '.spec.source.repoURL' ${app_file})
     local chart=$(yq -e '.spec.source.chart' ${app_file})
     local chart_version=$(yq -e '.spec.source.targetRevision' ${app_file})
@@ -81,17 +84,22 @@ function helm_render_from_source() {
     release=$(yq -e '.spec.source.helm.releaseName' ${app_file}) \
     || release=$(yq -e '.metadata.name' ${app_file})
     local namespace=$(yq -e '.spec.destination.namespace' ${app_file})
-    local values_file=$(mktemp /tmp/${release}_${chart}_${chart_version}.yaml.XXXX)
-    yq '.spec.source.helm.values // ""' ${app_file} > ${values_file}
+    local values_arg=""
+    if yq -e '.spec.source.helm | has("values")' ${app_file}; then
+      local values_file=$(mktemp /tmp/${release}_${chart}_${chart_version}.yaml.XXXX)
+      values_arg="--values ${values_file}"
+      yq '.spec.source.helm.values // ""' ${app_file} > ${values_file}
+    fi
 
     helm template ${release} ${chart} \
       --version ${chart_version} --repo ${repo} \
       --include-crds \
-      --namespace ${namespace} --values ${values_file}
+      --namespace ${namespace} ${values_arg}
 }
 
 function helm_render_from_sources() {
-    local app_file=$1
+    local app_dir=$1
+    local app_file=${app_dir}/application.yaml
     local repo=$(yq -e '.spec.sources[0].repoURL' ${app_file})
     local chart=$(yq -e '.spec.sources[0].chart' ${app_file})
     local chart_version=$(yq -e '.spec.sources[0].targetRevision' ${app_file})
@@ -99,12 +107,16 @@ function helm_render_from_sources() {
     release=$(yq -e '.spec.sources[0].helm.releaseName' ${app_file}) \
     || release=$(yq -e '.metadata.name' ${app_file})
     local namespace=$(yq -e '.spec.destination.namespace' ${app_file})
-    local values_file=${app_file%.yaml}-values.yaml
+    local values_file=${app_dir}/values.yaml
+    local values_arg=""
+    if [ -f ${values_file} ]; then
+      values_arg="--values ${values_file}"
+    fi
 
     helm template ${release} ${chart} \
       --version ${chart_version} --repo ${repo} \
       --include-crds \
-      --namespace ${namespace} --values ${values_file}
+      --namespace ${namespace} ${values_arg}
 }
 
 main "${@}"

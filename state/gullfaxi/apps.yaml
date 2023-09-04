@@ -34,8 +34,8 @@ spec:
     targetRevision: main
     directory:
       # https://argo-cd.readthedocs.io/en/stable/user-guide/directory/
-      recurse: false
-      exclude: '{*-values.yaml}'
+      recurse: true
+      exclude: '{values.yaml,*/manifests/*}'
   syncPolicy:
     automated:
       prune: true
