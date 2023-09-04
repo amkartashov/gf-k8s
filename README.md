@@ -8,6 +8,7 @@
 | [Apps](https://argocd.ioot.xyz/applications/argocd/apps) | Main app of apps |![status](https://argocd.ioot.xyz/api/badge?name=apps&revision=true)|
 | [ArgoCD](https://argocd.ioot.xyz/applications/argocd/argocd) | |![status](https://argocd.ioot.xyz/api/badge?name=argocd&revision=true)|
 | [Cilium](https://argocd.ioot.xyz/applications/argocd/cilium) | |![status](https://argocd.ioot.xyz/api/badge?name=cilium&revision=true)|
+| [Nginx Ingress Controller](https://argocd.ioot.xyz/applications/argocd/ingress-nginx) | |![status](https://argocd.ioot.xyz/api/badge?name=ingress-nginx&revision=true)|
 | [Cert Manager](https://argocd.ioot.xyz/applications/argocd/cert-manager) | |![status](https://argocd.ioot.xyz/api/badge?name=cert-manager&revision=true)|
 
 ## Cluster initialization

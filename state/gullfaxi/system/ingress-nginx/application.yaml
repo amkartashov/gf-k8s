@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ingress-nginx
+  project: system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  source:
+    repoURL: https://kubernetes.github.io/ingress-nginx
+    chart: ingress-nginx
+    targetRevision: 4.7.1
+    helm:
+      values: |
+        # https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
+        ingress-nginx:
+          controller:
+            metrics:
+              enabled: true
+              service:
+                omitClusterIP: true
+            service:
+              # preserve source IPs
+              externalTrafficPolicy: Local
+              omitClusterIP: true
+              type: NodePort
+              nodePorts:
+                # port forwarding on router
+                http: 30080
+                https: 30443
+          defaultBackend:
+            service:
+              omitClusterIP: true
