@@ -7,6 +7,8 @@
 | [System](https://argocd.ioot.xyz/applications/argocd/system) | System app of apps |![status](https://argocd.ioot.xyz/api/badge?name=system&revision=true)|
 | [Apps](https://argocd.ioot.xyz/applications/argocd/apps) | Main app of apps |![status](https://argocd.ioot.xyz/api/badge?name=apps&revision=true)|
 | [ArgoCD](https://argocd.ioot.xyz/applications/argocd/argocd) | |![status](https://argocd.ioot.xyz/api/badge?name=argocd&revision=true)|
+| [Cilium](https://argocd.ioot.xyz/applications/argocd/cilium) | |![status](https://argocd.ioot.xyz/api/badge?name=cilium&revision=true)|
+| [Cert Manager](https://argocd.ioot.xyz/applications/argocd/cert-manager) | |![status](https://argocd.ioot.xyz/api/badge?name=cert-manager&revision=true)|
 
 ## Cluster initialization
 
