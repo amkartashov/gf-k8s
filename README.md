@@ -6,7 +6,7 @@
 |----------------|-------------|--------|
 | [System](https://argocd.ioot.xyz/applications/argocd/system) | System app of apps |![status](https://argocd.ioot.xyz/api/badge?name=system&revision=true)|
 | [Apps](https://argocd.ioot.xyz/applications/argocd/apps) | Main app of apps |![status](https://argocd.ioot.xyz/api/badge?name=apps&revision=true)|
-| [ArgoCD](https://argocd.ioot.xyz/applications/argocd/argo-cd) | |![status](https://argocd.ioot.xyz/api/badge?name=argo-cd&revision=true)|
+| [ArgoCD](https://argocd.ioot.xyz/applications/argocd/argocd) | |![status](https://argocd.ioot.xyz/api/badge?name=argocd&revision=true)|
 
 ## Cluster initialization
 

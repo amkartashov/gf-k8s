@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argo-cd
+  name: argocd
   namespace: argocd
 spec:
   destination:
@@ -24,4 +24,4 @@ spec:
       targetRevision: 5.45.0
       helm:
         valueFiles:
-          - $values/state/gullfaxi/system/argo-cd-values.yaml
+          - $values/state/gullfaxi/system/argocd-values.yaml
