@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: router-svc
+spec:
+  ports:
+  - protocol: TCP
+    port: 443
+    targetPort: 443
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: router-svc
+subsets:
+  - addresses:
+      - ip: 192.168.1.1
+    ports:
+      - port: 443
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-rules
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+spec:
+  ingressClassName: nginx
+  tls:
+  - secretName: san-ioot-xyz
+    hosts:
+    - router.ioot.xyz
+  rules:
+    - host: router.ioot.xyz
+      http:
+        paths:
+        - pathType: ImplementationSpecific
+          backend:
+            service:
+              name: router-svc
+              port:
+                number: 443

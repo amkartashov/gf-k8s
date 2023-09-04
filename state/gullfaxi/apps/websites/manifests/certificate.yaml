@@ -1,0 +1,17 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: san-ioot-xyz
+spec:
+  secretName: san-ioot-xyz
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  commonName: ioot.xyz
+  dnsNames:
+  - ioot.xyz
+  - a.ioot.xyz
+  - router.ioot.xyz
+  # to be deleted someday
+  - gorilych.ru
+  - router.gorilych.ru

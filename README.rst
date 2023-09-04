@@ -32,6 +32,9 @@ Applications & Projects
 +------------------------------+----------------------------------------------------------------+-------------------------+
 | Oauth2-proxy_                | `Oauth2 Proxy`_                                                | |oauth2-proxy_status|   |
 +------------------------------+----------------------------------------------------------------+-------------------------+
+| Websites_                    | * https://a.ioot.xyz                                           | |websites_status|       |
+|                              | * https://router.ioot.xyz                                      |                         |
++------------------------------+----------------------------------------------------------------+-------------------------+
 
 .. _`Default Project`: https://argocd.ioot.xyz/applications?proj=default
 
@@ -68,6 +71,10 @@ Applications & Projects
 .. _Oauth2-proxy: https://argocd.ioot.xyz/applications/argocd/oauth2-proxy
 .. _Oauth2 Proxy: https://github.com/oauth2-proxy/oauth2-proxy
 .. |oauth2-proxy_status| image:: https://argocd.ioot.xyz/api/badge?name=oauth2-proxy&revision=true
+
+.. _Websites: https://argocd.ioot.xyz/applications/argocd/websites
+.. |websites_status| image:: https://argocd.ioot.xyz/api/badge?name=websites&revision=true
+
 
 Cluster initialization
 ===============================================================================

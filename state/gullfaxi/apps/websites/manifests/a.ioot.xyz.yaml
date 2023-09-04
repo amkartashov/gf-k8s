@@ -1,0 +1,68 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aiootxyz
+  labels:
+    app: aiootxyz
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aiootxyz
+  template:
+    metadata:
+      labels:
+        app: aiootxyz
+    spec:
+      volumes:
+      - name: aiootxyz
+        hostPath:
+          path: /home/www/a.ioot.xyz
+          type: Directory
+      containers:
+      - name: aiootxyz
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+          name: http
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: aiootxyz
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: aiootxyz
+spec:
+  selector:
+    app: aiootxyz
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aiootxyz
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  tls:
+  - secretName: san-ioot-xyz
+    hosts:
+    - a.ioot.xyz
+  rules:
+    - host: a.ioot.xyz
+      http:
+        paths:
+        - pathType: ImplementationSpecific
+          backend:
+            service:
+              name: aiootxyz
+              port: 
+                number: 80
+
