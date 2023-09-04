@@ -21,6 +21,23 @@ spec:
     helm:
       releaseName: argocd
       values: |
+        configs:
+          cm:
+            url: https://argocd.ioot.xyz
+            exec.enabled: true
+            statusbadge.enabled: "true"
+            dex.config: |
+              connectors:
+              - type: github
+                id: github
+                name: GitHub
+                config:
+                  clientID: $dex.github.clientId
+                  clientSecret: $dex.github.clientSecret
+          rbac:
+            policy.csv: |
+              # sub for amkartashov github account with id 7404372
+              g, Cgc3NDA0MzcyEgZnaXRodWI, role:admin
         server:
           # https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#ssl-passthrough-with-cert-manager-and-lets-encrypt
           ingress:
@@ -36,8 +53,3 @@ spec:
               - hosts:
                   - argocd.ioot.xyz
                 secretName: argocd-server-tls
-          configEnabled: true
-          config:
-            url: https://argocd.ioot.xyz
-            statusbadge.enabled: "true"
-
