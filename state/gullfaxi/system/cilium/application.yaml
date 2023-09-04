@@ -14,7 +14,7 @@ spec:
     syncOptions:
       - CreateNamespace=true
   source:
-    repoURL: https://helm.cilium.io/
+    repoURL: https://helm.cilium.io
     chart: cilium
     targetRevision: 1.14.1
     helm:
