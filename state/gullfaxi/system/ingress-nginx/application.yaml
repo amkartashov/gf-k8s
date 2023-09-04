@@ -20,21 +20,20 @@ spec:
     helm:
       values: |
         # https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
-        ingress-nginx:
-          controller:
-            metrics:
-              enabled: true
-              service:
-                omitClusterIP: true
-            service:
-              # preserve source IPs
-              externalTrafficPolicy: Local
-              omitClusterIP: true
-              type: NodePort
-              nodePorts:
-                # port forwarding on router
-                http: 30080
-                https: 30443
-          defaultBackend:
+        controller:
+          metrics:
+            enabled: true
             service:
               omitClusterIP: true
+          service:
+            # preserve source IPs
+            externalTrafficPolicy: Local
+            omitClusterIP: true
+            type: NodePort
+            nodePorts:
+              # port forwarding on router
+              http: 30080
+              https: 30443
+        defaultBackend:
+          service:
+            omitClusterIP: true
