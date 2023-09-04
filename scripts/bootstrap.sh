@@ -25,9 +25,10 @@ function main() {
 
     # apply manifests for crucial applications
     for app_file in \
-        ${state_path}/system/argo-cd.yaml \
+        ${state_path}/system/argocd.yaml \
         ; do
         namespace=$(yq -e '.spec.destination.namespace' ${app_file})
+
         ${kubectl_cmd} create ns ${namespace} || true
         helm_render ${app_file} | ${kubectl_cmd} -n ${namespace} apply -f -
     done
@@ -61,6 +62,17 @@ function help() {
 
 function helm_render() {
     local app_file=$1
+    local values_file=${app_file%.yaml}-values.yaml
+
+    if [ -f ${values_file} ]; then
+      helm_render_from_sources "$@"
+    else
+      helm_render_from_source "$@"
+    fi
+}
+
+function helm_render_from_source() {
+    local app_file=$1
     local repo=$(yq -e '.spec.source.repoURL' ${app_file})
     local chart=$(yq -e '.spec.source.chart' ${app_file})
     local chart_version=$(yq -e '.spec.source.targetRevision' ${app_file})
@@ -68,6 +80,21 @@ function helm_render() {
     local namespace=$(yq -e '.spec.destination.namespace' ${app_file})
     local values_file=$(mktemp /tmp/${release}_${chart}_${chart_version}.yaml.XXXX)
     yq '.spec.source.helm.values // ""' ${app_file} > ${values_file}
+
+    helm template ${release} ${chart} \
+      --version ${chart_version} --repo ${repo} \
+      --include-crds \
+      --namespace ${namespace} --values ${values_file}
+}
+
+function helm_render_from_sources() {
+    local app_file=$1
+    local repo=$(yq -e '.spec.sources[0].repoURL' ${app_file})
+    local chart=$(yq -e '.spec.sources[0].chart' ${app_file})
+    local chart_version=$(yq -e '.spec.sources[0].targetRevision' ${app_file})
+    local release=$(yq -e '.spec.sources[0].helm.releaseName' ${app_file})
+    local namespace=$(yq -e '.spec.destination.namespace' ${app_file})
+    local values_file=${app_file%.yaml}-values.yaml
 
     helm template ${release} ${chart} \
       --version ${chart_version} --repo ${repo} \
