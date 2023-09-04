@@ -1,5 +1,13 @@
 # GitOps repository for kubernetes cluster
 
+## Applications
+
+|  Application   | Description | Status |
+|----------------|-------------|--------|
+| [System](https://argocd.ioot.xyz/applications/argocd/system) | System app of apps |![status](https://argocd.ioot.xyz/api/badge?name=system&revision=true)|
+| [Apps](https://argocd.ioot.xyz/applications/argocd/apps) | Main app of apps |![status](https://argocd.ioot.xyz/api/badge?name=apps&revision=true)|
+| [ArgoCD](https://argocd.ioot.xyz/applications/argocd/argo-cd) | |![status](https://argocd.ioot.xyz/api/badge?name=argo-cd&revision=true)|
+
 ## Cluster initialization
 
 Single node cluster.
@@ -8,7 +16,7 @@ OS: Debian 11
 
 Cluster created with kubeadm https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
 
-## ArgoCD bootstrap
+### ArgoCD bootstrap
 
 * Create ssh key for argocd, f.e. `ssh-keygen -f .ssh/argocd.ioot.xyz`
 * Add pub key .ssh/argocd.ioot.xyz.pub to https://github.com/amkartashov/gf-k8s/settings/keys/new
