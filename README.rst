@@ -94,11 +94,11 @@ Cluster created with kubeadm https://kubernetes.io/docs/setup/production-environ
 ArgoCD bootstrap
 -------------------------------------------------------------------------------
 
-* Create ssh key for argocd, f.e. `ssh-keygen -f .ssh/argocd.ioot.xyz`
+* Create ssh key for argocd, f.e. ``ssh-keygen -f .ssh/argocd.ioot.xyz``
 
 * Add pub key .ssh/argocd.ioot.xyz.pub to https://github.com/amkartashov/gf-k8s/settings/keys/new
 
-* Run bootstrap script `scripts/bootstrap.sh -k gullfaxi -e gullfaxi`
+* Run bootstrap script ``scripts/bootstrap.sh -k gullfaxi -e gullfaxi``
 
 * Add git repo:
 
@@ -108,7 +108,7 @@ ArgoCD bootstrap
     argocd repo add git@github.com:amkartashov/gf-k8s --ssh-private-key-path ~/.ssh/argocd.ioot.xyz
 
 
-* Create new Oauth application <https://github.com/settings/applications/new>:
+* Create new Oauth application https://github.com/settings/applications/new:
 
   * Application name: oauth2.ioot.xyz
   * Homepage URL: https://oauth2.ioot.xyz
@@ -121,7 +121,7 @@ ArgoCD bootstrap
       argocd app set argocd/oauth2-proxy --parameter config.clientSecret REPLACE
       argocd app set argocd/oauth2-proxy --parameter config.cookieSecret `pwgen -1 32`
 
-* Create new Oauth application <https://github.com/settings/applications/new>:
+* Create new Oauth application https://github.com/settings/applications/new:
 
   * Application name: argocd.ioot.xyz
   * Homepage URL: https://argocd.ioot.xyz/
