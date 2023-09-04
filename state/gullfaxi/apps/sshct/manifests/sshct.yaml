@@ -29,16 +29,17 @@ spec:
       - name: sshct
         securityContext:
           privileged: true
-        image: ghcr.io/amkartashov/sshct:v3.8.0
+        image: ghcr.io/amkartashov/sshct:v4.0.0
         imagePullPolicy: IfNotPresent
         env:
         - name: CT_SSH_PORT
           value: "30810"
-        #- name: CTUSERPWD
-        #  valueFrom:
-        #    secretKeyRef:
-        #      name: sshct
-        #      key: password
+        - name: CT_TIMEZONE
+          value: Asia/Novosibirsk
+        - name: CT_LOCALE
+          value: ru_RU.UTF-8
+        - name: CT_USERGROUPS
+          value: docker:999
         volumeMounts:
         - mountPath: /home
           name: home
