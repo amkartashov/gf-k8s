@@ -20,11 +20,13 @@ Applications & Projects
 +------------------------------+----------------------------------------------------------------+-------------------------+
 | ArgoCD_                      | `GitOps tool for Kubernetes`_                                  | |argocd_status|         |
 +------------------------------+----------------------------------------------------------------+-------------------------+
+| Cert-Manager_                | `Certificate Management`_                                      | |cert-manager_status|   |
++------------------------------+----------------------------------------------------------------+-------------------------+
 | Cilium_                      | `Cluster CNI plugin`_                                          | |cilium_status|         |
 +------------------------------+----------------------------------------------------------------+-------------------------+
 | Ingress-Nginx_               | `Ingress Controller`_                                          | |ingress-nginx_status|  |
 +------------------------------+----------------------------------------------------------------+-------------------------+
-| Cert-Manager_                | `Certificate Management`_                                      | |cert-manager_status|   |
+| Local-Path-Provisioner_      | `Rancher Local-Path`_                                          | |local-path_status|     |
 +------------------------------+----------------------------------------------------------------+-------------------------+
 | `Apps Project`_, **user level applications**                                                                            |
 +------------------------------+----------------------------------------------------------------+-------------------------+
@@ -43,6 +45,10 @@ Applications & Projects
 .. _GitOps tool for Kubernetes: https://argo-cd.readthedocs.io
 .. |argocd_status| image:: https://argocd.ioot.xyz/api/badge?name=argocd&revision=true
 
+.. _Cert-Manager: https://argocd.ioot.xyz/applications/argocd/cert-manager
+.. _Certificate Management: https://cert-manager.io/
+.. |cert-manager_status| image:: https://argocd.ioot.xyz/api/badge?name=cert-manager&revision=true
+
 .. _Cilium: https://argocd.ioot.xyz/applications/argocd/cilium
 .. _Cluster CNI plugin: https://github.com/cilium/cilium
 .. |cilium_status| image:: https://argocd.ioot.xyz/api/badge?name=cilium&revision=true
@@ -51,9 +57,9 @@ Applications & Projects
 .. _Ingress Controller: https://github.com/kubernetes/ingress-nginx
 .. |ingress-nginx_status| image:: https://argocd.ioot.xyz/api/badge?name=ingress-nginx&revision=true
 
-.. _Cert-Manager: https://argocd.ioot.xyz/applications/argocd/cert-manager
-.. _Certificate Management: https://cert-manager.io/
-.. |cert-manager_status| image:: https://argocd.ioot.xyz/api/badge?name=cert-manager&revision=true
+.. _Local-Path-Provisioner: https://argocd.ioot.xyz/applications/argocd/local-path-provisioner
+.. _Rancher Local-Path: https://github.com/rancher/local-path-provisioner
+.. |local-path_status| image:: https://argocd.ioot.xyz/api/badge?name=local-path-provisioner&revision=true
 
 
 Cluster initialization
