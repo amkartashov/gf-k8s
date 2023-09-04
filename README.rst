@@ -75,10 +75,11 @@ ArgoCD bootstrap
 * Run bootstrap script `scripts/bootstrap.sh -k gullfaxi -e gullfaxi`
 
 * Add git repo:
-    .. code-block:: bash
 
-      argocd login --grpc-web argocd.ioot.xyz
-      argocd repo add git@github.com:amkartashov/gf-k8s --ssh-private-key-path ~/.ssh/argocd.ioot.xyz
+  .. code-block:: bash
+
+    argocd login --grpc-web argocd.ioot.xyz
+    argocd repo add git@github.com:amkartashov/gf-k8s --ssh-private-key-path ~/.ssh/argocd.ioot.xyz
 
 
 * Create new Oauth application <https://github.com/settings/applications/new>:
@@ -87,13 +88,14 @@ ArgoCD bootstrap
   * Homepage URL: https://argocd.ioot.xyz/
   * Authorization callback URL: https://argocd.ioot.xyz/api/dex/callback
   * Update dex client id and secret:
-      .. code-block:: bash
 
-        kubectl --context gullfaxi -n argocd patch secret argocd-secret \
-        --patch='{"stringData": {
-          "dex.github.clientId": "REPLACE",
-          "dex.github.clientSecret": "REPLACE"
-        }}'
+    .. code-block:: bash
+
+      kubectl --context gullfaxi -n argocd patch secret argocd-secret \
+      --patch='{"stringData": {
+        "dex.github.clientId": "REPLACE",
+        "dex.github.clientSecret": "REPLACE"
+      }}'
 
 * Remove secret ``kubectl --context gullfaxi -n argocd delete secret argocd-initial-admin-secret``.
 
