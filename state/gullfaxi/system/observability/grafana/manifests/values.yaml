@@ -1,0 +1,15 @@
+dashboards:
+  k8s-views-namespaces:
+    url: https://grafana.com/api/dashboards/15758/revisions/17/download
+  k8s-views-global:
+    url: https://grafana.com/api/dashboards/15757/revisions/23/download
+  k8s-views-pods:
+    url: https://grafana.com/api/dashboards/15760/revisions/17/download
+  k8s-system-coredns:
+    url: https://grafana.com/api/dashboards/15762/revisions/12/download
+  victoriametrics:
+    url: https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/master/dashboards/victoriametrics.json
+  vmagent:
+    url: https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/master/dashboards/vmagent.json
+  nodeexporter:
+    url: https://grafana.com/api/dashboards/1860/revisions/31/download
