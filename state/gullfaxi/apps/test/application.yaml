@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: test
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: test
+  project: apps
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  source:
+    repoURL: git@github.com:amkartashov/gf-k8s.git
+    targetRevision: main
+    path: state/gullfaxi/apps/test/manifests/
