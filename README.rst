@@ -24,6 +24,10 @@ Applications & Projects
 +------------------------------+----------------------------------------------------------------+-------------------------+
 | Cilium_                      | `Cluster CNI plugin`_                                          | |cilium_status|         |
 +------------------------------+----------------------------------------------------------------+-------------------------+
+| Grafana-Operator_            | `Grafana Operator`_                                            | |grafana-op_status|     |
++------------------------------+----------------------------------------------------------------+-------------------------+
+| Grafana_                     | Grafana                                                        | |grafana_status|        |
++------------------------------+----------------------------------------------------------------+-------------------------+
 | Ingress-Nginx_               | `Ingress Controller`_                                          | |ingress-nginx_status|  |
 +------------------------------+----------------------------------------------------------------+-------------------------+
 | Local-Path-Provisioner_      | `Rancher Local-Path`_                                          | |local-path_status|     |
@@ -63,6 +67,13 @@ Applications & Projects
 .. _Ingress-Nginx: https://argocd.ioot.xyz/applications/argocd/ingress-nginx
 .. _Ingress Controller: https://github.com/kubernetes/ingress-nginx
 .. |ingress-nginx_status| image:: https://argocd.ioot.xyz/api/badge?name=ingress-nginx&revision=true
+
+.. _Grafana-Operator: https://argocd.ioot.xyz/applications/argocd/grafana-operator
+.. _Grafana Operator: https://github.com/grafana-operator/grafana-operator
+.. |grafana-op_status| image:: https://argocd.ioot.xyz/api/badge?name=grafana-operator&revision=true
+
+.. _Grafana: https://argocd.ioot.xyz/applications/argocd/grafana
+.. |grafana_status| image:: https://argocd.ioot.xyz/api/badge?name=grafana&revision=true
 
 .. _Local-Path-Provisioner: https://argocd.ioot.xyz/applications/argocd/local-path-provisioner
 .. _Rancher Local-Path: https://github.com/rancher/local-path-provisioner
