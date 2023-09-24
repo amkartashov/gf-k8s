@@ -1,0 +1,49 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  labels:
+    stack: observability
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: loki
+  project: system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  sources:
+    - repoURL: git@github.com:amkartashov/gf-k8s.git
+      targetRevision: main
+      path: state/gullfaxi/system/observability/loki/manifests
+    - repoURL: https://grafana.github.io/helm-charts
+      chart: loki
+      targetRevision: 5.23.0
+      helm:
+        values: |
+          # https://github.com/grafana/loki/blob/main/production/helm/loki/values.yaml
+          # https://grafana.com/docs/loki/latest/setup/install/helm/install-monolithic/
+          gateway:
+            enabled: false
+          singleBinary:
+            replicas: 1
+            persistence:
+              enableStatefulSetAutoDeletePVC: false
+          loki:
+            auth_enabled: false
+            commonConfig:
+              replication_factor: 1
+            storage:
+              type: filesystem
+          test:
+            enabled: false
+          monitoring:
+            selfMonitoring:
+              enabled: false
+              grafanaAgent:
+                installOperator: false
+            lokiCanary:
+              enabled: false

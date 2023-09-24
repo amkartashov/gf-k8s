@@ -36,6 +36,10 @@ Applications & Projects
 +------------------------------+----------------------------------------------------------------+-------------------------+
 | Local-Path-Provisioner_      | `Rancher Local-Path`_                                          | |local-path_status|     |
 +------------------------------+----------------------------------------------------------------+-------------------------+
+| Loki_                        |                                                                | |loki_status|           |
++------------------------------+----------------------------------------------------------------+-------------------------+
+| Promtail_                    |                                                                | |promtail_status|       |
++------------------------------+----------------------------------------------------------------+-------------------------+
 | Prometheus-node-exporter_    | `Node exporter`_                                               | |pne_status|            |
 +------------------------------+----------------------------------------------------------------+-------------------------+
 | Victoria-Metrics-Operator_   | `Victoria Metrics Operator`_                                   | |vm-op_status|          |
@@ -97,6 +101,12 @@ Applications & Projects
 .. _Local-Path-Provisioner: https://argocd.ioot.xyz/applications/argocd/local-path-provisioner
 .. _Rancher Local-Path: https://github.com/rancher/local-path-provisioner
 .. |local-path_status| image:: https://argocd.ioot.xyz/api/badge?name=local-path-provisioner&revision=true
+
+.. _Loki: https://argocd.ioot.xyz/applications/argocd/loki
+.. |loki_status| image:: https://argocd.ioot.xyz/api/badge?name=loki&revision=true
+
+.. _Promtail: https://argocd.ioot.xyz/applications/argocd/promtail
+.. |promtail_status| image:: https://argocd.ioot.xyz/api/badge?name=promtail&revision=true
 
 .. _Prometheus-node-exporter: https://argocd.ioot.xyz/applications/argocd/prometheus-node-exporter
 .. _Node exporter: https://github.com/prometheus/node_exporter
