@@ -38,4 +38,10 @@ spec:
           # don't need it yet
           alertmanager: { enabled: false }
           vmalert: { enabled: false }
-          defaultRules: { create: true }
+          defaultRules: { create: false }
+
+          # these expose metrics on 127.0.0.1
+          # may be I'll fix it someday
+          kubeEtcd: { enabled: false }
+          kubeScheduler: { enabled: false }
+          kubeControllerManager: { enabled: false }
