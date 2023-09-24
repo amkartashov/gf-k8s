@@ -30,6 +30,8 @@ Applications & Projects
 +------------------------------+----------------------------------------------------------------+-------------------------+
 | Ingress-Nginx_               | `Ingress Controller`_                                          | |ingress-nginx_status|  |
 +------------------------------+----------------------------------------------------------------+-------------------------+
+| Kube-Api_                    | Kube API exposed via ingress                                   | |kube-api_status|       |
++------------------------------+----------------------------------------------------------------+-------------------------+
 | Kube-State-Metrics_          | `Kubernetes Metrics`_                                          | |ksm_status|            |
 +------------------------------+----------------------------------------------------------------+-------------------------+
 | Local-Path-Provisioner_      | `Rancher Local-Path`_                                          | |local-path_status|     |
@@ -77,6 +79,9 @@ Applications & Projects
 .. _Kube-State-Metrics: https://argocd.ioot.xyz/applications/argocd/kube-state-metrics
 .. _Kubernetes Metrics: https://github.com/kubernetes/kube-state-metrics
 .. |ksm_status| image:: https://argocd.ioot.xyz/api/badge?name=kube-state-metrics&revision=true
+
+.. _Kube-Api: https://argocd.ioot.xyz/applications/argocd/kube-api
+.. |kube-api_status| image:: https://argocd.ioot.xyz/api/badge?name=kube-api&revision=true
 
 .. _Grafana-Operator: https://argocd.ioot.xyz/applications/argocd/grafana-operator
 .. _Grafana Operator: https://github.com/grafana-operator/grafana-operator

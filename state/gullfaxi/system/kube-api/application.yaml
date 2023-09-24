@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-api
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  project: system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  source:
+    repoURL: git@github.com:amkartashov/gf-k8s.git
+    targetRevision: main
+    path: state/gullfaxi/system/kube-api/manifests
+
