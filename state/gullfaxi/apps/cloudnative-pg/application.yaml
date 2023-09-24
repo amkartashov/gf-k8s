@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cloudnative-pg
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cloudnative-pg
+  project: apps
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+  source:
+    repoURL: https://cloudnative-pg.github.io/charts
+    chart: cloudnative-pg
+    targetRevision: 0.18.2
+    helm:
+      values: |
+        # https://github.com/cloudnative-pg/charts/blob/main/charts/cloudnative-pg/values.yaml
+        monitoring:
+          podMonitorEnabled: true
