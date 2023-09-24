@@ -1,0 +1,14 @@
+# have to add repo because oci:// prefix is not supported in repoURL
+# https://github.com/argoproj/argo-cd/issues/10823
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: bitnami-oci-repo
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  name: bitnami
+  type: helm
+  enableOci: "true"
+  url: registry-1.docker.io/bitnamicharts
