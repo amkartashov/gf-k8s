@@ -15,6 +15,7 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true
   sources:
     - repoURL: https://github.com/prometheus-community/helm-charts.git
       targetRevision: kube-prometheus-stack-51.2.0
