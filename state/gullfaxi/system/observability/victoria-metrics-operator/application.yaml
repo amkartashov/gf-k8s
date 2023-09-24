@@ -25,3 +25,7 @@ spec:
       helm:
         values: |
           # https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-metrics-operator#parameters
+          operator:
+            prometheus_converter_add_argocd_ignore_annotations: true
+            enable_converter_ownership: true
+            useCustomConfigReloader: true
