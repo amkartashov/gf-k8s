@@ -16,9 +16,9 @@ spec:
     syncOptions:
       - CreateNamespace=true
   sources:
-    - repoURL: https://github.com/VictoriaMetrics/operator.git
-      targetRevision: v0.38.0
-      path: hack/prom_crd/
+    - repoURL: https://github.com/prometheus-community/helm-charts.git
+      targetRevision: kube-prometheus-stack-51.2.0
+      path: charts/kube-prometheus-stack/charts/crds/
     - repoURL: https://victoriametrics.github.io/helm-charts/
       chart: victoria-metrics-operator
       targetRevision: 0.27.0
