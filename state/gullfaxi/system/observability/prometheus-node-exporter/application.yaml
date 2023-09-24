@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus-node-exporter
+  labels:
+    stack: observability
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prometheus-node-exporter
+  project: system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  sources:
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: prometheus-node-exporter
+      targetRevision: 4.23.1
+      helm:
+        values: |
+          # https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-node-exporter
+          prometheus:
+            monitor:
+              enabled: true
