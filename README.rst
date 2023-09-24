@@ -42,6 +42,8 @@ Applications & Projects
 +------------------------------+----------------------------------------------------------------+-------------------------+
 | Victoria-Metrics_            | `Victoria Metrics`_                                            | |vm_status|             |
 +------------------------------+----------------------------------------------------------------+-------------------------+
+| victoria-metrics-k8s-stack_  | `Kubernetes Monitoring Stack`_                                 | |vmks_status|           |
++------------------------------+----------------------------------------------------------------+-------------------------+
 | `Apps Project`_, **user level applications**                                                                            |
 +------------------------------+----------------------------------------------------------------+-------------------------+
 | Oauth2-proxy_                | `Oauth2 Proxy`_                                                | |oauth2-proxy_status|   |
@@ -107,6 +109,10 @@ Applications & Projects
 .. _Victoria-Metrics: https://argocd.ioot.xyz/applications/argocd/victoria-metrics
 .. _Victoria Metrics: https://victoriametrics.com/
 .. |vm_status| image:: https://argocd.ioot.xyz/api/badge?name=victoria-metrics&revision=true
+
+.. _victoria-metrics-k8s-stack: https://argocd.ioot.xyz/applications/argocd/victoria-metrics-k8s-stack
+.. _Kubernetes Monitoring Stack: https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-metrics-k8s-stack/
+.. |vmks_status| image:: https://argocd.ioot.xyz/api/badge?name=victoria-metrics-k8s-stack&revision=true
 
 .. _`Apps Project`: https://argocd.ioot.xyz/applications?proj=apps
 
