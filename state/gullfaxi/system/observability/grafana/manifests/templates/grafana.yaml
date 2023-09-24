@@ -1,0 +1,45 @@
+# https://github.com/grafana-operator/grafana-operator/blob/v5.0.0-rc1/docs/docs/api.md#grafana
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: grafana
+  labels:
+    instance: grafana
+spec:
+  config:
+    server:
+      root_url: https://{{ .Values.hostname }}
+    security:
+      admin_user: admin
+      admin_password: {{ .Values.adminPassword }}
+    auth.github:
+      enabled: "true"
+      allow_sign_up: "true"
+      auto_login: "true"
+      allow_assign_grafana_admin: "true"
+      role_attribute_path: >-
+        [login=='amkartashov'][0] && 'GrafanaAdmin'
+      role_attribute_strict: "true"
+      client_id: 593511d4b21277d52242
+      client_secret: {{ .Values.githubClientSecret }}
+  ingress:
+    metadata:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+    spec:
+      ingressClassName: nginx
+      tls:
+        - hosts:
+            - {{ .Values.hostname }}
+          secretName: grafana-tls-secret
+      rules:
+        - host: {{ .Values.hostname }}
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: grafana-service
+                    port:
+                      number: 3000
+                path: /
+                pathType: Prefix

@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  labels:
+    stack: observability
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: grafana
+  project: system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  source:
+    repoURL: git@github.com:amkartashov/gf-k8s.git
+    targetRevision: main
+    path: state/gullfaxi/system/observability/grafana/manifests/
+    helm:
+      values: |
+        hostname: grafana.ioot.xyz
+        adminPassword: change_in_argocd
+        githubClientSecret: change_in_argocd

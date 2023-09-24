@@ -136,6 +136,18 @@ ArgoCD bootstrap
         "dex.github.clientSecret": "REPLACE"
       }}'
 
+* Create new Oauth application https://github.com/settings/applications/new:
+
+  * Application name: grafana.ioot.xyz
+  * Homepage URL: https://grafana.ioot.xyz/
+  * Authorization callback URL: https://grafana.ioot.xyz/login/github
+  * Update client secret and admin password:
+
+    .. code-block:: bash
+
+      argocd app set argocd/grafana --parameter githubClientSecret=REPLACE
+      argocd app set argocd/grafana --parameter adminPassword=`pwgen -1 12`
+
 * Remove secret ``kubectl --context gullfaxi -n argocd delete secret argocd-initial-admin-secret``.
 
 Passing Sensitive Parameters in ArgoCD apps
