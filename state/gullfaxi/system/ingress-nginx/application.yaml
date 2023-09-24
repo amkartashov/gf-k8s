@@ -34,6 +34,8 @@ spec:
               # port forwarding on router
               http: 30080
               https: 30443
+          extraArgs:
+            enable-ssl-passthrough: ""
         defaultBackend:
           service:
             omitClusterIP: true
