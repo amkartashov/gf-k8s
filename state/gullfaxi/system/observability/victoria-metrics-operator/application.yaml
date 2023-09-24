@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: victoria-metrics-operator
+  labels:
+    stack: observability
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: victoria-metrics-operator
+  project: system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  sources:
+    - repoURL: https://github.com/VictoriaMetrics/operator.git
+      targetRevision: v0.38.0
+      path: hack/prom_crd/
+    - repoURL: https://victoriametrics.github.io/helm-charts/
+      chart: victoria-metrics-operator
+      targetRevision: 0.27.0
+      helm:
+        values: |
+          # https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-metrics-operator#parameters
