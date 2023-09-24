@@ -1,0 +1,17 @@
+# https://docs.victoriametrics.com/operator/api.html#vmsingle
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMSingle
+metadata:
+  name: victoria
+spec:
+  retentionPeriod: 7d
+  removePvcAfterDelete: true
+  serviceSpec:
+    metadata:
+      name: victoria
+    spec: {}
+  storage:
+    accessModes: ['ReadWriteOnce']
+    resources:
+      requests:
+        storage: 10Gi

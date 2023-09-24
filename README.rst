@@ -34,6 +34,8 @@ Applications & Projects
 +------------------------------+----------------------------------------------------------------+-------------------------+
 | Victoria-Metrics-Operator_   | `Victoria Metrics Operator`_                                   | |vm-op_status|          |
 +------------------------------+----------------------------------------------------------------+-------------------------+
+| Victoria-Metrics_            | `Victoria Metrics`_                                            | |vm_status|             |
++------------------------------+----------------------------------------------------------------+-------------------------+
 | `Apps Project`_, **user level applications**                                                                            |
 +------------------------------+----------------------------------------------------------------+-------------------------+
 | Oauth2-proxy_                | `Oauth2 Proxy`_                                                | |oauth2-proxy_status|   |
@@ -84,6 +86,10 @@ Applications & Projects
 .. _Victoria-Metrics-Operator: https://argocd.ioot.xyz/applications/argocd/victoria-metrics-operator
 .. _Victoria Metrics Operator: https://github.com/VictoriaMetrics/operator
 .. |vm-op_status| image:: https://argocd.ioot.xyz/api/badge?name=victoria-metrics-operator&revision=true
+
+.. _Victoria-Metrics: https://argocd.ioot.xyz/applications/argocd/victoria-metrics
+.. _Victoria Metrics: https://victoriametrics.com/
+.. |vm_status| image:: https://argocd.ioot.xyz/api/badge?name=victoria-metrics&revision=true
 
 .. _`Apps Project`: https://argocd.ioot.xyz/applications?proj=apps
 
