@@ -2,6 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: cloudnative-pg
+  labels:
+    app-type: operator
 spec:
   destination:
     server: https://kubernetes.default.svc

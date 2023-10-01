@@ -8,3 +8,8 @@ spec:
   primaryUpdateStrategy: unsupervised
   storage:
     size: 10Gi
+  bootstrap:
+    initdb:
+      database: gitea
+      localeCollate: en_US.UTF-8
+      localeCType: en_US.UTF-8

@@ -29,41 +29,50 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-  sources:
-    - repoURL: codeberg.org/forgejo-contrib
-      chart: forgejo
-      targetRevision: 0.12.1
-      helm:
-        valuesObject:
-          memcached:
-            enabled: false
-          postgresql:
-            enabled: false
-          test:
-            enabled: false
-          ingress:
+  source:
+    repoURL: codeberg.org/forgejo-contrib
+    chart: forgejo
+    targetRevision: 0.12.1
+    helm:
+      valuesObject:
+        memcached:
+          enabled: false
+        postgresql:
+          enabled: false
+        test:
+          enabled: false
+        ingress:
+          enabled: true
+          className: nginx
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt
+          hosts:
+            - host: git.ioot.xyz
+              paths:
+                - path: /
+                  pathType: Prefix
+          tls:
+            - secretName: forgejo-tls
+              hosts:
+                - git.ioot.xyz
+        gitea:
+          admin:
+            username: amkartashov
+            # password: reset_in_argocd
+            email: "a@ioot.xyz"
+          oauth:
+            - name: GitHub
+              provider: github
+          config:
+            database:
+              DB_TYPE: postgres
+              HOST: postgresql-rw
+              NAME: gitea
+              USER: gitea
+              # PASSWD: reset_in_argocd
+            service:
+              DISABLE_REGISTRATION: "true"
+          metrics:
             enabled: true
-            className: nginx
-            annotations:
-              kubernetes.io/tls-acme: "true"
-            hosts:
-              - host: git.ioot.xyz
-                paths:
-                  - path: /
-                    pathType: Prefix
-            tls:
-              - secretName: forgejo-tls
-                hosts:
-                  - git.ioot.xyz
-          gitea:
-            admin:
-              username: admin
-              password: reset_in_argocd
-              email: "a@ioot.xyz"
-            metrics:
+            serviceMonitor:
               enabled: true
-              serviceMonitor:
-                enabled: true
-    - repoURL: git@github.com:amkartashov/gf-k8s.git
-      targetRevision: main
-      path: state/gullfaxi/apps/forgejo/manifests

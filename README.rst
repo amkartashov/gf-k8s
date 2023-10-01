@@ -160,7 +160,7 @@ ArgoCD bootstrap
 
   .. code-block:: bash
 
-    argocd login --grpc-web argocd.ioot.xyz
+    argocd login --grpc-web argocd.ioot.xyz --sso
     argocd repo add git@github.com:amkartashov/gf-k8s --ssh-private-key-path ~/.ssh/argocd.ioot.xyz
 
 
@@ -204,10 +204,23 @@ ArgoCD bootstrap
       argocd app set argocd/grafana --parameter githubClientSecret=REPLACE
       argocd app set argocd/grafana --parameter adminPassword=`pwgen -1 12`
 
-* Reset forgejo password
+* Create new Oauth application https://github.com/settings/applications/new:
 
-  .. code-block:: bash
-    argocd app set argocd/forgejo --parameter adminPassword=`pwgen -1 12`
+  * Application name: git.ioot.xyz
+  * Homepage URL: https://git.ioot.xyz/
+  * Authorization callback URL: https://git.ioot.xyz/user/oauth2/GitHub/callback
+  * Update client secret and admin password:
+
+    .. code-block:: bash
+
+      argocd app set argocd/forgejo --parameter 'gitea.oauth[0].key=REPLACE'
+      argocd app set argocd/forgejo --parameter 'gitea.oauth[0].secret=REPLACE'
+      argocd app set argocd/forgejo --parameter gitea.admin.password=`pwgen -1 12`
+      argocd app set argocd/forgejo --parameter gitea.config.database.PASSWD=$(\
+        kubectl --context gullfaxi -n forgejo get secret \
+        postgresql-app -o jsonpath='{.data.password}' \
+        | base64 -d \
+      )
 
 
 * Remove secret ``kubectl --context gullfaxi -n argocd delete secret argocd-initial-admin-secret``.
