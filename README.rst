@@ -204,6 +204,12 @@ ArgoCD bootstrap
       argocd app set argocd/grafana --parameter githubClientSecret=REPLACE
       argocd app set argocd/grafana --parameter adminPassword=`pwgen -1 12`
 
+* Reset forgejo password
+
+  .. code-block:: bash
+    argocd app set argocd/forgejo --parameter adminPassword=`pwgen -1 12`
+
+
 * Remove secret ``kubectl --context gullfaxi -n argocd delete secret argocd-initial-admin-secret``.
 
 Passing Sensitive Parameters in ArgoCD apps
