@@ -21,9 +21,9 @@ spec:
         hostPath:
           path: /home
           type: DirectoryOrCreate
-      - name: dockersock
+      - name: containerdsock
         hostPath:
-          path: /var/run/docker.sock
+          path: /run/containerd/containerd.sock
           type: Socket
       containers:
       - name: sshct
@@ -43,5 +43,5 @@ spec:
         volumeMounts:
         - mountPath: /home
           name: home
-        - mountPath: /var/run/docker.sock
-          name: dockersock
+        - mountPath: /run/containerd/containerd.sock
+          name: containerdsock
