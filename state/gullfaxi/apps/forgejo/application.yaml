@@ -34,7 +34,7 @@ spec:
     chart: forgejo
     targetRevision: 0.12.1
     helm:
-      valuesObject:
+      values: |
         memcached:
           enabled: true
         postgresql:
@@ -73,6 +73,6 @@ spec:
             service:
               DISABLE_REGISTRATION: "true"
           metrics:
-            enabled: 'true'
+            enabled: true
             serviceMonitor:
-              enabled: 'true'
+              enabled: true
