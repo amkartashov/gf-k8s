@@ -15,8 +15,8 @@ spec:
       - CreateNamespace=true
   sources:
     - repoURL: git@github.com:amkartashov/gf-k8s.git
-      targetRevision: test-chart-v0.0.1
-      path: state/gullfaxi/apps/test/manifests/
+      targetRevision: test-chart-v0.0.2
+      path: charts/test
       helm:
         valueFiles:
           - $values/state/gullfaxi/apps/test/values.yaml
