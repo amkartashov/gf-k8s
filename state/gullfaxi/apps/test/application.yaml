@@ -13,7 +13,13 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-  source:
-    repoURL: git@github.com:amkartashov/gf-k8s.git
-    targetRevision: main
-    path: state/gullfaxi/apps/test/manifests/
+  sources:
+    - repoURL: git@github.com:amkartashov/gf-k8s.git
+      targetRevision: test-chart-v0.0.1
+      path: state/gullfaxi/apps/test/manifests/
+      helm:
+        valueFiles:
+          - $values/state/gullfaxi/apps/test/values.yaml
+    - repoURL: git@github.com:amkartashov/gf-k8s.git
+      targetRevision: main
+      ref: values
