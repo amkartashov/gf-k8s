@@ -1,6 +1,8 @@
+global:
+  domain: argocd.ioot.xyz
+
 configs:
   cm:
-    url: https://argocd.ioot.xyz
     exec.enabled: true
     admin.enabled: false
     statusbadge.enabled: "true"
