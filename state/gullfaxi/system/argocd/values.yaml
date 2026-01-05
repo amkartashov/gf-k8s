@@ -1,6 +1,10 @@
 global:
   domain: argocd.ioot.xyz
 
+redis:
+  image:
+    repository: cr.yandex/mirror/library/redis
+
 configs:
   cm:
     exec.enabled: true
@@ -18,6 +22,7 @@ configs:
     policy.csv: |
       # sub for amkartashov github account with id 7404372
       g, Cgc3NDA0MzcyEgZnaXRodWI, role:admin
+    scopes: '[sub, groups, email]'
 
 server:
   # https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#ssl-passthrough-with-cert-manager-and-lets-encrypt
